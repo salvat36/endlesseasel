@@ -43,6 +43,8 @@ class User(db.Model, SerializerMixin):
 
     serialize_only = ('id', 'username', 'email', 'cart')
 
+#! Add Validations
+
 # User Representation
     def __repr__(self):
         return f'User {self.id}, {self.username}, {self.email}'
@@ -70,6 +72,8 @@ class Artwork(db.Model, SerializerMixin):
 #!Add Artwork Serialization 
     serialize_only = ('id', 'user_id', 'genre', 'price', 'title', 'image')
 
+#! Add Validations
+
 # Artwork Representation
     def __repr__(self):
         return f'Artwork {self.id}, {self.user_id}, {self.title}, {self.image}'
@@ -89,12 +93,15 @@ class Review(db.Model, SerializerMixin):
     user = db.relationship('User', back_populates='reviews')
     artwork = db.relationship('Artwork', back_populates = 'reviews')
 
+#!Add Review Serialization 
+    serialize_only = ('id', 'user_id', 'artwork_id', 'rating', 'description' )
+
+#! Add Validations
+
 # Review Representation
     def __repr__(self):
         return f'Review {self.id}, {self.user_id}, {self.rating}, {self.description}'
     
-#!Add Review Serialization 
-    serialize_only = ('id', 'user_id', 'artwork_id', 'rating', 'description' )
 
 #UserArtwork Model
 class UserArtwork(db.Model, SerializerMixin):
@@ -113,6 +120,8 @@ class UserArtwork(db.Model, SerializerMixin):
 
 #!Add UserArtwork Serialization 
     serialize_only = ('id', 'user_id', 'artwork_id')
+
+#! Add Validations
 
 # UserArtwork Representation
     def __repr__(self):
