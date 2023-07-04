@@ -21,8 +21,6 @@ def home():
     <img src='https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max' alt='not found' >
     """
 
-
-#! LEFT OFF HERE
 # Signup Route
 @app.route("/signup", methods=["POST"])
 def signup():
