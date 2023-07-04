@@ -39,7 +39,7 @@ function App() {
         <Route path='/profile'>
           <Profile/>
         </Route>
-        <Route path=''>
+        <Route path='/contact'>
           <component/>
         </Route>
       </Switch>
