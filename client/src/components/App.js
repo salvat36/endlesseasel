@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
+import Navigation from "./Navigation";
+import Home from "./Home";
+import Shop from "./Shop";
+import Profile from "./Profile";
 
 function App() {
   const [user, setUser] = useState(null)
@@ -23,7 +27,23 @@ function App() {
   }, []);
 
   return (
-    <div>Testing</div>
+    <main>
+          <Navigation/>
+      <Switch>
+        <Route exact path='/'>
+          <Home/>
+        </Route>
+        <Route path='/shop'>
+          <Shop/>
+        </Route>
+        <Route path='/profile'>
+          <Profile/>
+        </Route>
+        <Route path=''>
+          <component/>
+        </Route>
+      </Switch>
+    </main>
   )
 
 }
