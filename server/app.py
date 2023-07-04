@@ -29,7 +29,21 @@ def login():
         return make_response({'error': str(e)}, 401)
 
 #Logout Route
+@app.route('/logout', methods=['DELETE'])
+def logout():
+    if session.get('user_id'):
+        session['user_id'] = None
+        return make_response({'message': 'Logout successful'}, 204)
+    return make_response({'error': 'Unable to logout'})
 
+#Authenticate Route
+@app.route('/authenticate', methods=['GET'])
+def get():
+    id = session.get('user_id')
+    user = db.session.get(User, session['user_id'])
+    if id and user:
+        return make_response(user.to_dict(), 200)
+    return make_response({'error': 'Unauthorized'}, 401)
 
 # Home Route
 @app.route("/")
