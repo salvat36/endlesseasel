@@ -22,5 +22,9 @@ function App() {
     fetchUser();
   }, []);
 
+  return (
+    <div>Testing</div>
+  )
+
 }
 export default App;

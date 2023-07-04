@@ -21,18 +21,19 @@ def home():
     <img src='https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max' alt='not found' >
     """
 
+
 # Signup Route
 @app.route("/signup", methods=["POST"])
 def signup():
-        data = request.get_json()
-        try:
-            new_user = User(**data)
-            db.session.add(new_user)
-            db.session.commit()
-            session["user.id"] = new_user.id
-            return make_response(new_user.to_dict(), 201)
-        except Exception as e:
-            return make_response({"errors": [str(e)]}, 400)
+    data = request.get_json()
+    try:
+        new_user = User(**data)
+        db.session.add(new_user)
+        db.session.commit()
+        session["user.id"] = new_user.id
+        return make_response(new_user.to_dict(), 201)
+    except Exception as e:
+        return make_response({"errors": [str(e)]}, 400)
 
 
 # Login Route
@@ -63,7 +64,7 @@ def logout():
 @app.route("/authenticate", methods=["GET"])
 def get():
     id = session.get("user_id")
-    user = db.session.get(User, session["user_id"])
+    user = db.session.get(User, id)
     if id and user:
         return make_response(user.to_dict(), 200)
     return make_response({"error": "Unauthorized"}, 401)
