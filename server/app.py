@@ -18,7 +18,8 @@ from models import User, Review, Artwork, UserArtwork
 # Home Route
 @app.route("/")
 def home():
-    return "<h1>EndlessEasel</h1>"
+    return """<h1>EndlessEasel</h1>
+              <img src='https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max' alt='not found' >"""
 
 
 class Users(Resource):
@@ -32,10 +33,12 @@ class Users(Resource):
             new_user = User(**data)
             db.session.add(new_user)
             db.session.commit()
-            session['user.id'] = new_user.id
+            session["user.id"] = new_user.id
             return make_response(new_user.to_dict(), 201)
         except Exception as e:
-            return make_response({'errors': [str(e)]}, 400)
+            return make_response({"errors": [str(e)]}, 400)
+
+
 api.add_resource(Users, "/users")
 
 
@@ -108,6 +111,16 @@ class Reviews(Resource):
         reviews = [r.to_dict() for r in Review.query.all()]
         return make_response(reviews, 200)
 
+    def post(self):
+        data = request.get_json()
+        try:
+            new_review = Review(**data)
+            db.session.add(new_review)
+            db.session.commit()
+            return make_response(new_review.to_dict(), 201)
+        except Exception as e:
+            return make_response({"errors": [str(e)]}, 400)
+
 
 api.add_resource(Reviews, "/reviews")
 
@@ -119,6 +132,14 @@ class ReviewById(Resource):
         if review:
             return make_response(review.to_dict(), 200)
         return make_response({"error": "Review not found"}, 404)
+
+    def delete(self, id):
+        review = db.session.get(Review, id)
+        if review:
+            db.session.delete(review)
+            db.session.commit()
+            return make_response("", 200)
+        return make_response({"error": "Review ID not found"})
 
 
 api.add_resource(ReviewById, "/reviews/<int:id>")
