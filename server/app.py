@@ -26,18 +26,16 @@ class Users(Resource):
         users = [a.to_dict() for a in User.query.all()]
         return make_response(users, 200)
 
-
-#! Need to add secret key to get this POST working
-#     def post(self):
-#         data = request.get_json()
-#         try:
-#             new_user = User(**data)
-#             db.session.add(new_user)
-#             db.session.commit()
-#             session['user.id'] = new_user.id
-#             return make_response(new_user.to_dict(), 201)
-#         except Exception as e:
-#             return make_response({'errors': [str(e)]}, 400)
+    def post(self):
+        data = request.get_json()
+        try:
+            new_user = User(**data)
+            db.session.add(new_user)
+            db.session.commit()
+            session['user.id'] = new_user.id
+            return make_response(new_user.to_dict(), 201)
+        except Exception as e:
+            return make_response({'errors': [str(e)]}, 400)
 api.add_resource(Users, "/users")
 
 
