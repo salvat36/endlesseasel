@@ -16,16 +16,18 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String)
     cart = db.Column(db.String)
 
-    # User Password_Hash
+# User Password_Hash
     @hybrid_property
     def password_hash(self):
         return self._password_hash
 
+# User Password_Hash Setter
     @password_hash.setter
     def password_hash(self, password):
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
         self._password_hash = password_hash.decode('utf-8')
 
+# User Password_Hash Authentication
     def authenticate(self, password):
         return bcrypt.check_password_hash(self.password_hash, password.encode('utf-8'))
 
@@ -48,7 +50,7 @@ class Artwork(db.Model, SerializerMixin):
 
 
 # Reviews Model
-class Reviews(db.Model, SerializerMixin):
+class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key = True)
@@ -58,4 +60,13 @@ class Reviews(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     description = db.Column(db.String)
 
+#UserArtwork Model
+class UserArtwork(db.Model, SerializerMixin):
+    __tablename__ = 'userartworks'
+
+    id = db.Column(db.Integer, primary_key = True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    artwork_id = db.Column(db.Integer, db.ForeignKey('artwork.id'))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
