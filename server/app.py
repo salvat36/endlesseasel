@@ -20,20 +20,39 @@ def home():
 
 class Users(Resource):
     def get(self):
-        users = [user.to_dict() for user in User.query.all()]
+        users = [a.to_dict() for a in User.query.all()]
         return make_response(users, 200)
     
-    # def post(self):
-    #     data = request.get_json()
-    #     try:
-    #         new_user = User(**data)
-    #         db.session.add(new_user)
-    #         db.session.commit()
-    #         session['user.id'] = new_user.id
-    #         return make_response(new_user.to_dict(), 201)
-    #     except Exception as e:
-    #         return make_response({'errors': [str(e)]}, 400)
+    def post(self):
+        data = request.get_json()
+        try:
+            new_user = User(**data)
+            db.session.add(new_user)
+            db.session.commit()
+            session['user.id'] = new_user.id
+            return make_response(new_user.to_dict(), 201)
+        except Exception as e:
+            return make_response({'errors': [str(e)]}, 400)
 api.add_resource(Users, '/users')
+
+class Artworks():
+    def get(self):
+        artworks = [a.to_dict() for a in Artwork.query.all()]
+        return make_response(artworks, 200)
+api.add_resource(Artworks, 'artworks')
+
+class UserArtworks():
+    def get(self):
+        user_artworks = [ua.to_dict() for ua in UserArtwork.query.all()]
+        return make_response(user_artworks, 200)
+api.add_resource(UserArtworks, '/user-artworks')
+
+class Reviews():
+    def get(self):
+        reviews = [r.to_dict() for r in Review.query.all()]
+        return make_response(reviews, 200)
+api.add_resource(Reviews, '/reviews')
+
 
 
 
