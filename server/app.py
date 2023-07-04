@@ -12,38 +12,6 @@ from flask import Flask, request, make_response, session
 from config import app, db, api
 from models import User, Review, Artwork, UserArtwork
 
-# Signup Route
-
-# Login Route
-@app.route('/login', methods=['POST'])
-def login():
-    try:
-        username = request.get_json().get('username')
-        password = request.get_json().get('password')
-        user = db.session.get(User, username)
-        if user and user.authenticate(password):
-            session['user_id'] = user.id
-            return make_response(user.to_dict(), 200)
-        return make_response({'error': 'Invalid credentials'}, 401)
-    except Exception as e:
-        return make_response({'error': str(e)}, 401)
-
-#Logout Route
-@app.route('/logout', methods=['DELETE'])
-def logout():
-    if session.get('user_id'):
-        session['user_id'] = None
-        return make_response({'message': 'Logout successful'}, 204)
-    return make_response({'error': 'Unable to logout'})
-
-#Authenticate Route
-@app.route('/authenticate', methods=['GET'])
-def get():
-    id = session.get('user_id')
-    user = db.session.get(User, session['user_id'])
-    if id and user:
-        return make_response(user.to_dict(), 200)
-    return make_response({'error': 'Unauthorized'}, 401)
 
 # Home Route
 @app.route("/")
@@ -52,6 +20,47 @@ def home():
     <h1>EndlessEasel</h1>
     <img src='https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max' alt='not found' >
     """
+
+
+#! LEFT OFF HERE
+# Signup Route
+@app.route("/signup", methods=["POST"])
+def signup():
+    pass
+
+
+# Login Route
+@app.route("/login", methods=["POST"])
+def login():
+    try:
+        username = request.get_json().get("username")
+        password = request.get_json().get("password")
+        user = db.session.get(User, username)
+        if user and user.authenticate(password):
+            session["user_id"] = user.id
+            return make_response(user.to_dict(), 200)
+        return make_response({"error": "Invalid credentials"}, 401)
+    except Exception as e:
+        return make_response({"error": str(e)}, 401)
+
+
+# Logout Route
+@app.route("/logout", methods=["DELETE"])
+def logout():
+    if session.get("user_id"):
+        session["user_id"] = None
+        return make_response({"message": "Logout successful"}, 204)
+    return make_response({"error": "Unable to logout"})
+
+
+# Authenticate Route
+@app.route("/authenticate", methods=["GET"])
+def get():
+    id = session.get("user_id")
+    user = db.session.get(User, session["user_id"])
+    if id and user:
+        return make_response(user.to_dict(), 200)
+    return make_response({"error": "Unauthorized"}, 401)
 
 
 # View for ALL Users
