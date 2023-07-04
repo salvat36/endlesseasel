@@ -11,7 +11,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
+    username = db.Column(db.String)
     _password_hash = db.Column(db.String)
     email = db.Column(db.String)
     cart = db.Column(db.String)
@@ -32,7 +32,7 @@ class User(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(self.password_hash, password.encode('utf-8'))
 
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.DateTie, onupdate=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
 # User Relationships
     user_artworks = db.relationship('UserArtwork', back_populates = 'user', cascade= 'all')
@@ -51,7 +51,7 @@ class Artwork(db.Model, SerializerMixin):
     __tablename__ = 'artworks'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     genre = db.Column(db.String)
     price = db.Column(db.Float)
     title = db.Column(db.String)
@@ -76,8 +76,8 @@ class Review(db.Model, SerializerMixin):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    artwork_id = db.Column(db.Integer, db.ForeignKey('artwork.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    artwork_id = db.Column(db.Integer, db.ForeignKey('artworks.id'))
     rating = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     description = db.Column(db.String)
@@ -97,8 +97,8 @@ class UserArtwork(db.Model, SerializerMixin):
     __tablename__ = 'user_artworks'
 
     id = db.Column(db.Integer, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    artwork_id = db.Column(db.Integer, db.ForeignKey('artwork.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    artwork_id = db.Column(db.Integer, db.ForeignKey('artworks.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 

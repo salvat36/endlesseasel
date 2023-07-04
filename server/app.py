@@ -15,8 +15,8 @@ from models import User, Review, Artwork, UserArtwork
 # Home Route
 @app.route('/')
 def home():
-    pass
+    raise KeyError('wrong key')
 
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
+    app.run(port=5555, debug=True, use_debugger=False, use_reloader=False)
