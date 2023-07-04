@@ -6,11 +6,17 @@
 from flask import request
 from flask_restful import Resource
 
+
 # Local imports
 from config import app, db, api
-from models import User, Recipe
-
+from models import User, Review, Artwork, UserArtwork
 # Views go here!
+
+# Home Route
+@app.route('/')
+def home():
+    pass
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
