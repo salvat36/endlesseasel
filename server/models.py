@@ -41,6 +41,8 @@ class User(db.Model, SerializerMixin):
 
 #!Add User Serialization 
 
+    serialize_only = ('id', 'username', 'email', 'cart')
+
 # User Representation
     def __repr__(self):
         return f'User {self.id}, {self.username}, {self.email}'
@@ -66,6 +68,7 @@ class Artwork(db.Model, SerializerMixin):
     #DO WE NEED TO ADD USER to connect FK user_ID?
 
 #!Add Artwork Serialization 
+    serialize_only = ('id', 'user_id', 'genre', 'price', 'title', 'image')
 
 # Artwork Representation
     def __repr__(self):
@@ -91,6 +94,7 @@ class Review(db.Model, SerializerMixin):
         return f'Review {self.id}, {self.user_id}, {self.rating}, {self.description}'
     
 #!Add Review Serialization 
+    serialize_only = ('id', 'user_id', 'artwork_id', 'rating', 'description' )
 
 #UserArtwork Model
 class UserArtwork(db.Model, SerializerMixin):
@@ -108,6 +112,7 @@ class UserArtwork(db.Model, SerializerMixin):
 
 
 #!Add UserArtwork Serialization 
+    serialize_only = ('id', 'user_id', 'artwork_id')
 
 # UserArtwork Representation
     def __repr__(self):
