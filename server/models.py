@@ -34,6 +34,13 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTie, onupdate=db.func.now())
 
+# User Relationships
+    user_artworks = db.relationship('UserArtwork', back_populates = 'user', cascade= 'all')
+    reviews = db.relationship('Review', back_populates = 'user')
+    artworks = association_proxy('user_artworks', 'artwork')
+
+#!Add User Serialization 
+
 # User Representation
     def __repr__(self):
         return f'User {self.id}, {self.username}, {self.email}'
@@ -52,6 +59,14 @@ class Artwork(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+#Artwork Relationships
+    user_artworks = db.relationship('UserArtwork', back_populates = 'artwork', cascade='all')
+    reviews = db.relationship('Review', back_populates = 'artwork')
+    users = association_proxy('user_artworks', 'user')
+    #DO WE NEED TO ADD USER to connect FK user_ID?
+
+#!Add Artwork Serialization 
+
 # Artwork Representation
     def __repr__(self):
         return f'Artwork {self.id}, {self.user_id}, {self.title}, {self.image}'
@@ -67,19 +82,32 @@ class Review(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     description = db.Column(db.String)
 
+#Review Relationships
+    user = db.relationship('User', back_populates='reviews')
+    artwork = db.relationship('Artwork', back_populates = 'reviews')
+
 # Review Representation
     def __repr__(self):
         return f'Review {self.id}, {self.user_id}, {self.rating}, {self.description}'
+    
+#!Add Review Serialization 
 
 #UserArtwork Model
 class UserArtwork(db.Model, SerializerMixin):
-    __tablename__ = 'userartworks'
+    __tablename__ = 'user_artworks'
 
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     artwork_id = db.Column(db.Integer, db.ForeignKey('artwork.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+#UserArtwork Relationships
+    user = db.relationship('User', back_populates = 'user_artworks')
+    artwork = db.relationship('Artwork', back_populates = 'user_artworks')
+
+
+#!Add UserArtwork Serialization 
 
 # UserArtwork Representation
     def __repr__(self):
