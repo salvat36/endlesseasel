@@ -26,7 +26,15 @@ def home():
 # Signup Route
 @app.route("/signup", methods=["POST"])
 def signup():
-    pass
+        data = request.get_json()
+        try:
+            new_user = User(**data)
+            db.session.add(new_user)
+            db.session.commit()
+            session["user.id"] = new_user.id
+            return make_response(new_user.to_dict(), 201)
+        except Exception as e:
+            return make_response({"errors": [str(e)]}, 400)
 
 
 # Login Route
