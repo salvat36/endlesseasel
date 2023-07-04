@@ -12,6 +12,7 @@ flask-restful = "*"
 flask-cors = "*"
 flask-bcrypt = "*"
 faker = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
