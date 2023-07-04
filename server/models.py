@@ -34,6 +34,10 @@ class User(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTie, onupdate=db.func.now())
 
+# User Representation
+    def __repr__(self):
+        return f'User {self.id}, {self.username}, {self.email}'
+
 
 # Artwork Model
 class Artwork(db.Model, SerializerMixin):
@@ -48,6 +52,9 @@ class Artwork(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+# Artwork Representation
+    def __repr__(self):
+        return f'Artwork {self.id}, {self.user_id}, {self.title}, {self.image}'
 
 # Reviews Model
 class Review(db.Model, SerializerMixin):
@@ -60,6 +67,10 @@ class Review(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     description = db.Column(db.String)
 
+# Review Representation
+    def __repr__(self):
+        return f'Review {self.id}, {self.user_id}, {self.rating}, {self.description}'
+
 #UserArtwork Model
 class UserArtwork(db.Model, SerializerMixin):
     __tablename__ = 'userartworks'
@@ -69,4 +80,8 @@ class UserArtwork(db.Model, SerializerMixin):
     artwork_id = db.Column(db.Integer, db.ForeignKey('artwork.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+# UserArtwork Representation
+    def __repr__(self):
+        return f'UserArtwork {self.id}, {self.user_id}, {self.artwork_id}'
 
