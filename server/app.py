@@ -12,16 +12,35 @@ from flask import Flask, request, make_response, session
 from config import app, db, api
 from models import User, Review, Artwork, UserArtwork
 
-# Views go here!
+# Signup Route
+
+# Login Route
+@app.route('/login', methods=['POST'])
+def login():
+    try:
+        username = request.get_json().get('username')
+        password = request.get_json().get('password')
+        user = db.session.get(User, username)
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
+            return make_response(user.to_dict(), 200)
+        return make_response({'error': 'Invalid credentials'}, 401)
+    except Exception as e:
+        return make_response({'error': str(e)}, 401)
+
+#Logout Route
 
 
 # Home Route
 @app.route("/")
 def home():
-    return """<h1>EndlessEasel</h1>
-              <img src='https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max' alt='not found' >"""
+    return """
+    <h1>EndlessEasel</h1>
+    <img src='https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max' alt='not found' >
+    """
 
 
+# View for ALL Users
 class Users(Resource):
     def get(self):
         users = [a.to_dict() for a in User.query.all()]
@@ -42,6 +61,7 @@ class Users(Resource):
 api.add_resource(Users, "/users")
 
 
+# Views for ONE User
 class UserById(Resource):
     def get(self, id):
         user = db.session.get(User, id)
