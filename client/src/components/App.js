@@ -5,6 +5,7 @@ import Home from "./Home";
 import Shop from "./Shop";
 import Profile from "./Profile";
 import Contact from "./Contact";
+import Register from "./Register";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -29,6 +30,7 @@ function App() {
   return (
     <main>
       <Navigation />
+      <Register updateUser={updateUser}/>
       <Switch>
         <Route exact path="/">
           <Home />
