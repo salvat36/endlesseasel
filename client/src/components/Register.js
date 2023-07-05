@@ -10,19 +10,19 @@ const Register = ( {updateUser} ) => {
     const registerSchema = yup.object().shape({
         username: yup
         .string()
-        .required()
+        .required('Username is required')
         .min()
         .max(),
         
         password: yup
         .string()
-        .required()
+        .required('Password is required')
         .min()
         .max(),
 
         email: yup
         .string()
-        .required()
+        .required('Email is required')
         .email()
         .min()
         .max()
@@ -50,10 +50,11 @@ const Register = ( {updateUser} ) => {
                 resetForm();
                 history.push('/')
               })
+            } else {
+              //! res.json().then((error) => setError([error.error]))
             }
           })
         }
-
     })
   return (
     <div>Register</div>
