@@ -1,8 +1,10 @@
+import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-const Signup = () => {
-    const signupSchema = yup.object().shape({
+const Register = () => {
+    const registerSchema = yup.object().shape({
         username: yup
         .string()
         .required()
@@ -27,12 +29,15 @@ const Signup = () => {
         initialValues: {
             username: '',
             password: '',
-            email: ''
-        }
+            email: '',
+        },
+        validationSchema: registerSchema,
+        onSubmit: (values, { resetForm })
+
     })
   return (
-    <div>Signup</div>
+    <div>Register</div>
   )
 }
 
-export default Signup
+export default Register
