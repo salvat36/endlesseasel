@@ -27,7 +27,11 @@ def home():
 def signup():
     data = request.get_json()
     try:
-        new_user = User(**data)
+        new_user = User(
+            password_hash=data.get("password"),
+            username=data.get("username"),
+            email=data.get("email"),
+        )
         db.session.add(new_user)
         db.session.commit()
         session["user.id"] = new_user.id
@@ -41,12 +45,11 @@ def signup():
 def login():
     try:
         username = request.get_json().get("username")
-        password = request.get_json().get("password")
-        user = db.session.get(User, username)
-        if user and user.authenticate(password):
+        password_hash = request.get_json().get("password")
+        user = User.query.filter_by(username=username).first()
+        if user and user.authenticate(password_hash):
             session["user_id"] = user.id
             return make_response(user.to_dict(), 200)
-        return make_response({"error": "Invalid credentials"}, 401)
     except Exception as e:
         return make_response({"error": str(e)}, 401)
 
@@ -75,17 +78,6 @@ class Users(Resource):
     def get(self):
         users = [a.to_dict() for a in User.query.all()]
         return make_response(users, 200)
-
-    def post(self):
-        data = request.get_json()
-        try:
-            new_user = User(**data)
-            db.session.add(new_user)
-            db.session.commit()
-            session["user.id"] = new_user.id
-            return make_response(new_user.to_dict(), 201)
-        except Exception as e:
-            return make_response({"errors": [str(e)]}, 400)
 
 
 api.add_resource(Users, "/users")

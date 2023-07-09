@@ -20,7 +20,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 load_dotenv('.env')
-app.secret_key = environ.get('SECRET_KEY')
+app.secret_key = environ.get('SECRET_KEY', 'dev')
 
 # Define metadata, instantiate db
 metadata = MetaData(naming_convention={
