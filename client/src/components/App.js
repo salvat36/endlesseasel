@@ -6,6 +6,7 @@ import Shop from "./Shop";
 import Profile from "./Profile";
 import Contact from "./Contact";
 import Register from "./Register";
+import ArtDetail from "./ArtDetail";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -43,6 +44,9 @@ function App() {
         </Route>
         <Route path="/contact">
           <Contact />
+        </Route>
+        <Route path='/artworks/:id'>
+          <ArtDetail/>
         </Route>
       </Switch>
     </main>

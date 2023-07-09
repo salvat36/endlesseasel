@@ -16,10 +16,11 @@ const Shop = () => {
   ));
 
   return (
-  <div>
-    <h1>Art Gallery</h1>
-    {mappedArtworks}
-  </div>)
+    <div>
+      <h1>Art Gallery</h1>
+      {mappedArtworks}
+    </div>
+  );
 };
 
 export default Shop;
