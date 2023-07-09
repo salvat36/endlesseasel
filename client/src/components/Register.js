@@ -51,13 +51,35 @@ const Register = ( {updateUser} ) => {
                 history.push('/')
               })
             } else {
-              //! res.json().then((error) => setError([error.error]))
+              //! res.json()
+              //!.then((error) => setError([error.error]))
             }
           })
         }
     })
   return (
-    <div>Register</div>
+    <div>
+      <form onSubmit={formik.handleSubmit}>
+        <>
+        <label>Username</label>
+        <input type='text' name='username' value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+        {formik.errors.username && formik.touched.username} <div>{formik.errors.username}</div>
+        </>
+        <>
+        <label>Password</label>
+        <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+        {formik.errors.password && formik.touched.password} <div>{formik.errors.password}</div>
+        </>
+        <>
+        <label>Email</label>
+        <input type='text' name='text' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+        {formik.errors.email && formik.touched.email} <div>{formik.errors.email}</div>
+
+        
+        </>
+        
+      </form>
+    </div>
   )
 }
 
