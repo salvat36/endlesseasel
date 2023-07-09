@@ -7,25 +7,30 @@ const Register = ( {updateUser} ) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
 
+
+  const handleClick = () => {
+    setIsLoggedIn((isLoggedIn) => !isLoggedIn)
+  }
+
     const registerSchema = yup.object().shape({
         username: yup
         .string()
         .required('Username is required')
-        .min()
-        .max(),
+        .min(8)
+        .max(30),
         
         password: yup
         .string()
         .required('Password is required')
-        .min()
-        .max(),
+        .min(8)
+        .max(100),
 
         email: yup
         .string()
         .required('Email is required')
         .email()
-        .min()
-        .max()
+        .min(5)
+        .max(30)
     })
 
     const formik = useFormik({
@@ -61,23 +66,21 @@ const Register = ( {updateUser} ) => {
     <div>
       <form onSubmit={formik.handleSubmit}>
         <>
-        <label>Username</label>
+        <label>Username: </label>
         <input type='text' name='username' value={formik.values.username} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
         {formik.errors.username && formik.touched.username} <div>{formik.errors.username}</div>
         </>
         <>
-        <label>Password</label>
+        <label>Password: </label>
         <input type='password' name='password' value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
         {formik.errors.password && formik.touched.password} <div>{formik.errors.password}</div>
         </>
         <>
-        <label>Email</label>
-        <input type='text' name='text' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+        <label>Email: </label>
+        <input type='email' name='email' value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
         {formik.errors.email && formik.touched.email} <div>{formik.errors.email}</div>
-
-        
         </>
-        
+        <button type='submit' onClick={handleClick}> {isLoggedIn? 'Create' : 'Login'}</button>
       </form>
     </div>
   )
