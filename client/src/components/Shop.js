@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import ArtGallery from "./ArtGallery";
 
-const Shop = ( ) => {
-  const [artworks, setArtworks] = useState([])
+const Shop = () => {
+  const [artworks, setArtworks] = useState([]);
 
   useEffect(() => {
-    fetch('/artworks')
-    .then((res) => res.json())
-    .then(setArtworks)
-    .catch((err) => console.log(err))
-  }, [])
+    fetch("/artworks")
+      .then((res) => res.json())
+      .then(setArtworks)
+      .catch((err) => console.log(err));
+  }, []);
 
   const mappedArtworks = artworks.map((artwork) => (
     <ArtGallery key={artwork.id} {...artwork} />
-  ))
-
+  ));
 
   return (
   <div>
+    <h1>Art Gallery</h1>
     {mappedArtworks}
   </div>)
 };

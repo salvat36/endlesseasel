@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const ArtGallery = ( {genre, price, title, image} ) => {
+const ArtGallery = ({ genre, price, title, image }) => {
   return (
     <div>
-        <img src={image} alt={title}/>
-        <h1>{title}</h1>
+      <img src={image} alt={title} />
     </div>
-  )
-}
+  );
+};
 
-export default ArtGallery
+export default ArtGallery;

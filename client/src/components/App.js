@@ -9,7 +9,6 @@ import Register from "./Register";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [artworks, setartworks] = useState([])
 
   const updateUser = (user) => {
     setUser(user);
@@ -31,7 +30,7 @@ function App() {
   return (
     <main>
       <Navigation />
-      <Register updateUser={updateUser}/>
+      <Register updateUser={updateUser} />
       <Switch>
         <Route exact path="/">
           <Home />
