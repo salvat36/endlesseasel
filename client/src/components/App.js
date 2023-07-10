@@ -60,7 +60,7 @@ function App() {
 
   return (
     <main>
-      <Navigation handleLogoutClick={handleLogoutClick} />
+      <Navigation handleLogoutClick={handleLogoutClick} user={user} />
       <Register updateUser={updateUser} />
       <Switch>
         <Route exact path="/">
