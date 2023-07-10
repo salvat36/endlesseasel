@@ -19,17 +19,19 @@ function App() {
     setUser(user);
   };
 
+  const updateUserArtwork = (id) => {
+    setUser(currentUser => (
+      {...currentUser, artworks: currentUser.artworks.filter(artwork => (id !== artwork.id))}
+    ))
+  }
+
   useEffect(() => {
     const fetchUser = () => {
       fetch("/authenticate").then((res) => {
         if (res.ok) {
           res
             .json()
-            .then((data) =>
-              updateUser(
-                data?.user_artworks ? data : { ...data, user_artworks: [] }
-              )
-            );
+            .then(setUser);
         } else {
           updateUser(null);
         }
@@ -45,15 +47,6 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  const removeUser = (user) => {
-    setUser((currentUser) => {
-      if (currentUser.user) {
-        return {...currentUser, user: currentUser.filter((otherUser) => otherUser.id !== user.id)}
-      }
-    })
-  }
-
-  
   return (
     <main>
       <Navigation />
@@ -66,7 +59,7 @@ function App() {
           <Shop artworks={artworks} updateArtworks={updateArtworks} />
         </Route>
         <Route path="/user-artworks">
-          <UserArtwork user={user} updateArtworks={updateArtworks}/>
+          <UserArtwork updateUserArtwork={updateUserArtwork} user={user} updateArtworks={updateArtworks}/>
         </Route>
         <Route path="/contact">
           <Contact />

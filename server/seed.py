@@ -53,13 +53,13 @@ def create_artworks(users):
         'https://images.nightcafe.studio/jobs/KYDide4oXB6Q5NvwBHrI/KYDide4oXB6Q5NvwBHrI--1--dflzt.jpg?tr=w-320,c-at_max' 
         ]
 
-    for _ in range (20):
+    for i in range (20):
         artwork = Artwork(
             user_id = rc([user.id for user in users]),
             genre = rc(genres),
             price = randint(5,25),
             title = fake.word(),
-            image = fake.image_url(width=200, height=200),
+            image = images[i],
             created_at = fake.date_time(),
             updated_at = fake.date_time()
         )

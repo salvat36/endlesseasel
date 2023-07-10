@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const UserArtwork = ({ user, updateArtworks }) => {
+const UserArtwork = ({ user, updateArtworks, updateUserArtwork }) => {
   // const { artId } = useParams();
   // const [userArtworks, setUserArtworks] = useState([])
 
@@ -17,21 +17,21 @@ const UserArtwork = ({ user, updateArtworks }) => {
   // .catch(console.error)
   // },[artId])
 
-  // const handleDeleteUserArtwork = () => {
-  //   fetch(`/user-artworks/${artId}`, {method: 'DELETE'})
-  //   .then((res) => {
-  //     if (res.ok) {
-  //       updateArtworks([])
-  //       alert("Successfully Deleted User-Book")
-  //     }
-  //   });
-  // }
+  const handleDeleteUserArtwork = (id) => {
+    fetch(`/user-artworks/${id}`, {method: 'DELETE'})
+    .then((res) => {
+      if (res.ok) {
+        updateUserArtwork(id)
+        alert("Successfully Deleted User-Book")
+      }
+    });
+  }
 
   const userArtworksList = user?.artworks.map((artwork) => (
     <>
       <div key={artwork.id}> {artwork.title}</div>
       <img src={artwork.image} alt={artwork.title} />
-      {/* <button onClick={handleDeleteUserArtwork}>Remove</button> */}
+      <button onClick={()=>handleDeleteUserArtwork(artwork.id)}>Remove</button>
     </>
   ));
 
