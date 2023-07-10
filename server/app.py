@@ -136,7 +136,7 @@ class UserArtworks(Resource):
         try:
             new_UserArtwork = UserArtwork(
                 user_id = session['user_id'],
-                book_id = request.get_json()['id']
+                artwork_id = request.get_json()['id']
             )
             db.session.add(new_UserArtwork)
             db.session.commit()
