@@ -3,11 +3,9 @@ import { Switch, Route } from "react-router-dom";
 import Navigation from "./Navigation";
 import Home from "./Home";
 import Shop from "./Shop";
-import Profile from "./UserArtwork";
 import Contact from "./Contact";
 import Register from "./Register";
 import ArtDetail from "./ArtDetail";
-import UserProfile from "./UserArtwork";
 import UserArtwork from "./UserArtwork";
 
 function App() {
@@ -47,7 +45,7 @@ function App() {
         <Route path="/shop">
           <Shop />
         </Route>
-        <Route path="/profile">
+        <Route path="/user-artworks">
           <UserArtwork />
         </Route>
         <Route path="/contact">

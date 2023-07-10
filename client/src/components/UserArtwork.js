@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserArtwork = () => {
+const UserArtwork = ( {ua} ) => {
   return <div>Profile</div>;
 };
 
