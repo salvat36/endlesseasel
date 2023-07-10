@@ -11,6 +11,7 @@ import ArtDetail from "./ArtDetail";
 function App() {
   const [user, setUser] = useState(null);
 
+
   const updateUser = (user) => {
     setUser(user);
   };
@@ -19,7 +20,7 @@ function App() {
     const fetchUser = () => {
       fetch("/authenticate").then((res) => {
         if (res.ok) {
-          res.json().then(updateUser);
+          res.json().then((data) => updateUser(data?.user_artworks?data:{...data, user_artworks:[]}));
         } else {
           updateUser(null);
         }

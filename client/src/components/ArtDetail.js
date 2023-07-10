@@ -18,15 +18,10 @@ const ArtDetail = ({ updateUser, user }) => {
   }, [id]);
 
   const addUserArtwork = (artwork) => {
-    updateUser((currentUser) => ({
-      ...currentUser,
-      user_artworks: [
-        ...currentUser.user_artworks,
-        {
-          artwork,
-        },
-      ],
-    }));
+    updateUser({
+      ...user,
+      user_artworks: [...user.user_artworks, artwork],
+    });
   };
 
   const handleAddArtwork = () => {
