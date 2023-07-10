@@ -1,4 +1,3 @@
-import { ErrorMessage } from "formik";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import UserArtwork from "./UserArtwork";
@@ -20,7 +19,7 @@ const User = () => {
   }, [artId]);
 
   const mappedUserArtworks = userArtwork.map((ua) => (
-    <UserArtwork key={ua.id} ua={ua}/>
+    <UserArtwork key={ua.id} ua={ua} />
   ));
 
   return <div>{mappedUserArtworks}</div>;

@@ -10,7 +10,11 @@ import UserArtwork from "./UserArtwork";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [artworks, setArtworks] = useState([]);
 
+  const updateArtworks = (artworks) => {
+    setArtworks(artworks);
+  };
   const updateUser = (user) => {
     setUser(user);
   };
@@ -34,6 +38,13 @@ function App() {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    fetch("/artworks")
+      .then((res) => res.json())
+      .then(setArtworks)
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <main>
       <Navigation />
@@ -43,10 +54,10 @@ function App() {
           <Home />
         </Route>
         <Route path="/shop">
-          <Shop />
+          <Shop artworks={artworks} updateArtworks={updateArtworks} />
         </Route>
         <Route path="/user-artworks">
-          <UserArtwork />
+          <UserArtwork user={user}/>
         </Route>
         <Route path="/contact">
           <Contact />

@@ -41,7 +41,7 @@ class User(db.Model, SerializerMixin):
 
 #!Add User Serialization 
 
-    serialize_only = ('id', 'username', 'email', 'cart')
+    serialize_only = ('id', 'username', 'email', 'cart', 'artworks')
 
 #! Add Validations
 
