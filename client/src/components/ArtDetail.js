@@ -19,7 +19,7 @@ const ArtDetail = () => {
 
   return (
     <div>
-      <h1>ArtDetail</h1>
+      <h1>Art Detail</h1>
       <h2>Title: {title}</h2>
       <h2>Genre: {genre}</h2>
       <h2>Price: ${price}</h2>

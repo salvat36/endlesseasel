@@ -45,8 +45,8 @@ function App() {
         <Route path="/contact">
           <Contact />
         </Route>
-        <Route path='/artworks/:id'>
-          <ArtDetail/>
+        <Route path="/artworks/:id">
+          <ArtDetail />
         </Route>
       </Switch>
     </main>
