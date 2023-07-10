@@ -17,6 +17,18 @@ const ArtDetail = () => {
     });
   }, [id]);
 
+  const addUserArtwork = (book) => {
+    setUser((currentUser) => ({
+      ...currentUser,
+      user_artworks: [
+        ...currentUser.user_artworks,
+        {
+          artwork,
+        },
+      ],
+    }))
+  }
+
   const handleAddArtwork = () => {
   fetch('/user-artworks', {
     method: 'POST', 
@@ -24,7 +36,7 @@ const ArtDetail = () => {
     body: JSON.stringify ({ id }),
   }).then((res) => {
     if (res.ok) {
-        addUserArtwork(artwork);
+        // addUserArtwork(artwork);
     } else {
         alert('something went wrong')
     }
@@ -39,6 +51,7 @@ const ArtDetail = () => {
       <h2>Genre: {genre}</h2>
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
+      <button onClick={handleAddArtwork}>Add to Collection</button>
     </div>
   );
 };
