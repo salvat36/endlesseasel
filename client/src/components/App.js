@@ -45,6 +45,15 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  const removeUser = (user) => {
+    setUser((currentUser) => {
+      if (currentUser.user) {
+        return {...currentUser, user: currentUser.filter((otherUser) => otherUser.id !== user.id)}
+      }
+    })
+  }
+
+  
   return (
     <main>
       <Navigation />
