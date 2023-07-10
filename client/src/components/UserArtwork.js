@@ -35,7 +35,14 @@ const UserArtwork = ({ user, updateArtworks, updateUserArtwork }) => {
     </>
   ));
 
-  return <div>{userArtworksList}</div>;
+  return (
+    <>
+  {/* <div>User Profile for {user.username} </div> */}
+  {/* <button onClick={handleDeleteUser}>Delete Profile</button>
+  <button onClick={handleUpdateUser}>Update Profile</button> */}
+  <div>{userArtworksList}</div>;
+  </>
+  )
 };
 
 export default UserArtwork;
