@@ -130,6 +130,16 @@ class UserArtworks(Resource):
     def get(self):
         user_artworks = [ua.to_dict() for ua in UserArtwork.query.all()]
         return make_response(user_artworks, 200)
+    
+    def post(self):
+        data = request.get_json()
+        try:
+            new_UserArtwork = UserArtwork(**data)
+            db.session.add(new_UserArtwork)
+            db.session.commit()
+            return make_response(new_UserArtwork.to_dict(), 201)
+        except Exception as e:
+            return make_response({"errors": [str(e)]}, 400)
 
 
 api.add_resource(UserArtworks, "/user-artworks")
