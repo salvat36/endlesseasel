@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-const ArtDetail = () => {
+const ArtDetail = ({ updateUser, user }) => {
   const [artwork, setArtwork] = useState([]);
   const history = useHistory();
   const { id } = useParams();
@@ -17,8 +17,8 @@ const ArtDetail = () => {
     });
   }, [id]);
 
-  const addUserArtwork = (book) => {
-    setUser((currentUser) => ({
+  const addUserArtwork = (artwork) => {
+    updateUser((currentUser) => ({
       ...currentUser,
       user_artworks: [
         ...currentUser.user_artworks,
@@ -26,23 +26,22 @@ const ArtDetail = () => {
           artwork,
         },
       ],
-    }))
-  }
+    }));
+  };
 
   const handleAddArtwork = () => {
-  fetch('/user-artworks', {
-    method: 'POST', 
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify ({ id }),
-  }).then((res) => {
-    if (res.ok) {
-        // addUserArtwork(artwork);
-    } else {
-        alert('something went wrong')
-    }
-    })
-  }
-
+    fetch("/user-artworks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    }).then((res) => {
+      if (res.ok) {
+        addUserArtwork(artwork);
+      } else {
+        alert("something went wrong");
+      }
+    });
+  };
 
   return (
     <div>

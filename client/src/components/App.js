@@ -46,7 +46,7 @@ function App() {
           <Contact />
         </Route>
         <Route path="/artworks/:id">
-          <ArtDetail />
+          <ArtDetail updateUser={updateUser} user={user}/>
         </Route>
       </Switch>
     </main>
