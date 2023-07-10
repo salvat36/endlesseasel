@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import Navigation from "./Navigation";
 import Home from "./Home";
 import Shop from "./Shop";
@@ -11,6 +11,7 @@ import UserArtwork from "./UserArtwork";
 function App() {
   const [user, setUser] = useState(null);
   const [artworks, setArtworks] = useState([]);
+  const history = useHistory()
 
   const updateArtworks = (artworks) => {
     setArtworks(artworks);
@@ -47,9 +48,19 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleLogoutClick = () => {
+    fetch('/logout', {method: 'DELETE'})
+    .then ((res) => {
+      if (res.ok) {
+        updateUser(null)
+        history.push('/authenticate')
+      }
+    })
+  }
+
   return (
     <main>
-      <Navigation />
+      <Navigation handleLogoutClick={handleLogoutClick} />
       <Register updateUser={updateUser} />
       <Switch>
         <Route exact path="/">

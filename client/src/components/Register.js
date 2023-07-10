@@ -48,6 +48,8 @@ const Register = ({ updateUser }) => {
   });
   return (
     <div>
+      <h1> Please Login or Signup!</h1>
+      <h2>{isLoggedIn? 'Already a User?' : 'Not a User?'}</h2>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Username: </label>
