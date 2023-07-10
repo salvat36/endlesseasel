@@ -13,7 +13,6 @@ import UserArtwork from "./UserArtwork";
 function App() {
   const [user, setUser] = useState(null);
 
-
   const updateUser = (user) => {
     setUser(user);
   };
@@ -22,7 +21,13 @@ function App() {
     const fetchUser = () => {
       fetch("/authenticate").then((res) => {
         if (res.ok) {
-          res.json().then((data) => updateUser(data?.user_artworks?data:{...data, user_artworks:[]}));
+          res
+            .json()
+            .then((data) =>
+              updateUser(
+                data?.user_artworks ? data : { ...data, user_artworks: [] }
+              )
+            );
         } else {
           updateUser(null);
         }
@@ -49,7 +54,7 @@ function App() {
           <Contact />
         </Route>
         <Route path="/artworks/:id">
-          <ArtDetail updateUser={updateUser} user={user}/>
+          <ArtDetail updateUser={updateUser} user={user} />
         </Route>
       </Switch>
     </main>

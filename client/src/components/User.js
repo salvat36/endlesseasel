@@ -1,9 +1,24 @@
-import React from 'react'
+import { ErrorMessage } from "formik";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const User = () => {
-  return (
-    <div>User</div>
-  )
-}
+  const [userArtwork, setUserArtwork] = useState([])
+  const {artId} = useParams()
 
-export default User
+  useEffect(() => {
+    fetch(`/user-artworks/${artId}`)
+    .then(res => {
+        if (res.ok) {
+            res.json().then(setUserArtwork)
+        } else {
+            res.json().then (e => alert(e.message))
+        }
+    })
+    .catch(ErrorMessage)
+  }, [artId])
+
+  return <div>User</div>;
+};
+
+export default User;
