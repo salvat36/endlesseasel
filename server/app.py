@@ -134,7 +134,10 @@ class UserArtworks(Resource):
     def post(self):
         data = request.get_json()
         try:
-            new_UserArtwork = UserArtwork(**data)
+            new_UserArtwork = UserArtwork(
+                user_id = session['user_id'],
+                book_id = request.get_json()['id']
+            )
             db.session.add(new_UserArtwork)
             db.session.commit()
             return make_response(new_UserArtwork.to_dict(), 201)
