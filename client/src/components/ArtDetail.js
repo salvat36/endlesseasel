@@ -17,6 +17,21 @@ const ArtDetail = () => {
     });
   }, [id]);
 
+  const handleAddArtwork = () => {
+  fetch('/user-artworks', {
+    method: 'POST', 
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify ({ id }),
+  }).then((res) => {
+    if (res.ok) {
+        addUserArtwork(artwork);
+    } else {
+        alert('something went wrong')
+    }
+    })
+  }
+
+
   return (
     <div>
       <h1>Art Detail</h1>
