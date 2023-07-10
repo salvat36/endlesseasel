@@ -155,6 +155,14 @@ class UserArtworkById(Resource):
         if user_artwork:
             return make_response(user_artwork.to_dict(), 200)
         return make_response({"error": "UserArtwork not found"}, 404)
+    
+    def delete(self, id):
+        user_artwork = db.session.get(UserArtwork, id)
+        if user_artwork:
+            db.session.delete(user_artwork)
+            db.session.commit()
+            return make_response('', 200)
+        return make_response({'error': 'UserArtwork not found'})
 
 
 api.add_resource(UserArtworkById, "/user-artworks/<int:id>")

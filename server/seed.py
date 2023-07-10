@@ -29,6 +29,30 @@ def create_users():
 def create_artworks(users):
     artworks = []
     genres = ["Abstract","Impressionism","Surrealism","Cubism","Realism","Expressionism","Pop Art","Minimalism","Photorealism","Digital Art"]
+    images = [
+        'https://images.nightcafe.studio/jobs/lU1FhnvdaV3eQrUsDLtt/lU1FhnvdaV3eQrUsDLtt--1--m3kz0.jpg?tr=w-1080,c-at_max', 
+        'https://images.nightcafe.studio/jobs/lU1FhnvdaV3eQrUsDLtt/lU1FhnvdaV3eQrUsDLtt--1--m3kz0.jpg?tr=w-1080,c-at_max', 
+        'https://images.nightcafe.studio/jobs/ctXeXAuZ7G8AxSSxv69q/ctXeXAuZ7G8AxSSxv69q--1--uxm3h.jpg?tr=w-1080,c-at_max', 
+        'https://images.nightcafe.studio/jobs/SnURjssXWqHtwrhuRXSl/SnURjssXWqHtwrhuRXSl--1--rd0u7.jpg?tr=w-1080,c-at_max', 
+        'https://images.nightcafe.studio/jobs/URRBNaKX4O9uB4agPixH/URRBNaKX4O9uB4agPixH--1--c1ws1.jpg?tr=w-1080,c-at_max', 
+        'https://images.nightcafe.studio/jobs/lBLO4sv9pn0iLHGRt8gx/lBLO4sv9pn0iLHGRt8gx--1--l3hif.jpg?tr=w-1080,c-at_max', 
+        'https://images.nightcafe.studio/jobs/6SCO9Kgttx7mCnBKQHdT/6SCO9Kgttx7mCnBKQHdT--1--afkie.jpg?tr=w-1080,c-at_max', 
+        'https://images.nightcafe.studio/jobs/8TwA1zNtYpdd7RkqvjNX/8TwA1zNtYpdd7RkqvjNX--1--3ci6o.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/dg6YnuocQJDEhsf2Xy0n/dg6YnuocQJDEhsf2Xy0n--1--3pl6v.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/iEKfyjYzfD7NUunDk5lO/iEKfyjYzfD7NUunDk5lO--1--yqdlr.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/DTtILuTB3GYsWh8GwQpP/DTtILuTB3GYsWh8GwQpP--1--aha57.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/YeNMGidvNAEZwc9ARqWR/YeNMGidvNAEZwc9ARqWR--2--z1n0m.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/Ho9RMnhmbGY0MdIS64Gv/Ho9RMnhmbGY0MdIS64Gv--1--xtppr.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/7Qhzvqtuk1IwSsXnmAuD/7Qhzvqtuk1IwSsXnmAuD--1--wm6d1.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/E2ABbkCGUywonHRbWgxx/E2ABbkCGUywonHRbWgxx--1--d8eau.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/rS25PwjSJ5lCmaMNvRPL/rS25PwjSJ5lCmaMNvRPL--1--p3qw4.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/zZW4hoAnZShxguetnZ90/zZW4hoAnZShxguetnZ90--1--cad3b.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/pdG7zudKlK9nqgMVkmlT/pdG7zudKlK9nqgMVkmlT--1--jzek4.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/LGcffL44MiFf6hnme138/LGcffL44MiFf6hnme138--1--dd79u.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/Sb9CkFlTnf3aAImMt2g7/Sb9CkFlTnf3aAImMt2g7--1--1372m.jpg?tr=w-320,c-at_max', 
+        'https://images.nightcafe.studio/jobs/KYDide4oXB6Q5NvwBHrI/KYDide4oXB6Q5NvwBHrI--1--dflzt.jpg?tr=w-320,c-at_max' 
+        ]
+
     for _ in range (20):
         artwork = Artwork(
             user_id = rc([user.id for user in users]),

@@ -70,7 +70,7 @@ class Artwork(db.Model, SerializerMixin):
     #DO WE NEED TO ADD USER to connect FK user_ID?
 
 #!Add Artwork Serialization 
-    serialize_only = ('id', 'user_id', 'genre', 'price', 'title', 'image')
+    serialize_only = ('id', 'user_id', 'genre', 'price', 'title', 'image', 'reviews')
 
 #! Add Validations
 

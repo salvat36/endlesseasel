@@ -57,7 +57,7 @@ function App() {
           <Shop artworks={artworks} updateArtworks={updateArtworks} />
         </Route>
         <Route path="/user-artworks">
-          <UserArtwork user={user}/>
+          <UserArtwork user={user} updateArtworks={updateArtworks}/>
         </Route>
         <Route path="/contact">
           <Contact />
