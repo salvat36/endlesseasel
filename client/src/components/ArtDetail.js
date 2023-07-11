@@ -5,21 +5,28 @@ const ArtDetail = ({ updateUser, user }) => {
   const [artwork, setArtwork] = useState([]);
   const history = useHistory();
   const { id } = useParams();
-  const { genre, price, title, image } = artwork;
+  const { genre, price, title, image, reviews} = artwork;
 
   useEffect(() => {
     fetch(`/artworks/${id}`).then((res) => {
       if (res.ok) {
-        res.json().then(setArtwork);
+        res.json().then(setArtwork)
       } else {
         alert("Artwork Not Found");
       }
     });
   }, [id]);
-
+  
   const addUserArtwork = (artwork) => {
     updateUser({...user, artworks: [...user.artworks, artwork]});
   };
+
+  const mappedReviews = reviews?.map((review) => (
+    <ul>
+    <li>Customer Rating: {review.rating}/10</li>
+    <li>Customer Review: {review.description}</li>
+    </ul>
+  ))
 
   const handleAddArtwork = () => {
     fetch("/user-artworks", {
@@ -28,7 +35,7 @@ const ArtDetail = ({ updateUser, user }) => {
       body: JSON.stringify({ id }),
     }).then((res) => {
       if (res.ok) {
-        addUserArtwork(artwork);
+        addUserArtwork(artwork)
       } else {
         alert("something went wrong");
       }
@@ -43,6 +50,9 @@ const ArtDetail = ({ updateUser, user }) => {
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
       <button onClick={handleAddArtwork}>Add to Collection</button>
+      <ul>
+        {mappedReviews}
+      </ul>
     </div>
   );
 };
