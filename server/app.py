@@ -90,6 +90,22 @@ class UserById(Resource):
         if user:
             return make_response(user.to_dict(), 200)
         return make_response({"error": "User ID not found"}, 404)
+    
+    def patch(self, id):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
+        try:
+            updated_user = User.query.filter_by(id = session.get('user_id')).first()
+            if not updated_user:
+                return make_response({'error': 'User not found in database'}, 404)
+            data = request.get_json()
+            updated_user.username = data.get('username')
+            updated_user.password = data.get('password')
+            updated_user.email = data.get('email')
+            db.session.commit()
+            return make_response(updated_user.to_dict(), 200)
+        except Exception as e:
+            return make_response({'error': str(e)}, 422)
 
     def delete(self, id):
         user = db.session.get(User, id)
