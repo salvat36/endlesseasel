@@ -204,6 +204,12 @@ class Reviews(Resource):
 api.add_resource(Reviews, "/reviews")
 
 
+class ReviewsByArtworkId(Resource):
+    def get(self, artwork_id):
+        reviews = [r.to_dict() for r in Review.query.filter_by(artwork_id = artwork_id).all()]
+        return make_response(reviews, 200)
+api.add_resource(ReviewsByArtworkId, '/artworks/<int:artwork_id>/reviews')
+
 # View for ONE Review
 class ReviewById(Resource):
     def get(self, id):

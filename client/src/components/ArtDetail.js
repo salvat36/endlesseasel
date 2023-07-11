@@ -3,31 +3,42 @@ import { useParams, useHistory } from "react-router-dom";
 
 const ArtDetail = ({ updateUser, user }) => {
   const [artwork, setArtwork] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const history = useHistory();
   const { id } = useParams();
-  const { genre, price, title, image, reviews} = artwork;
+  const { genre, price, title, image } = artwork;
 
   useEffect(() => {
-    fetch(`/artworks/${id}`).then((res) => {
-      if (res.ok) {
-        res.json().then(setArtwork)
+    Promise.all([
+      fetch(`/artworks/${id}`),
+      fetch(`/artworks/${id}/reviews`),
+    ]).then((values) => {
+      if (values[0].ok) {
+        values[0].json().then(setArtwork);
       } else {
         alert("Artwork Not Found");
       }
+
+      if (values[1].ok) {
+        values[1]
+          .json()
+          .then(setReviews)
+          .catch((err) => console.log(err));
+      }
     });
   }, [id]);
-  
+
   const addUserArtwork = (artwork) => {
-    updateUser({...user, artworks: [...user.artworks, artwork]});
+    updateUser({ ...user, artworks: [...user.artworks, artwork] });
   };
 
   // ! REFACTOR TO REVIEWS COMPONENT?
   const mappedReviews = reviews?.map((review) => (
     <ul>
-    <li>Customer Rating: {review.rating}/10</li>
-    <li>Customer Review: {review.description}</li>
+      <li>Customer Rating: {review.rating}/10</li>
+      <li>Customer Review: {review.description}</li>
     </ul>
-  ))
+  ));
 
   const handleAddArtwork = () => {
     fetch("/user-artworks", {
@@ -36,7 +47,7 @@ const ArtDetail = ({ updateUser, user }) => {
       body: JSON.stringify({ id }),
     }).then((res) => {
       if (res.ok) {
-        addUserArtwork(artwork)
+        addUserArtwork(artwork);
       } else {
         alert("something went wrong");
       }
@@ -56,9 +67,7 @@ const ArtDetail = ({ updateUser, user }) => {
       <img src={image} alt={title} />
       <button onClick={handleAddArtwork}>Add to Collection</button>
       {/* <button onClick={handleAddReview}>Add Review</button> */}
-      <ul>
-        {mappedReviews}
-      </ul>
+      <ul>{mappedReviews}</ul>
     </div>
   );
 };
