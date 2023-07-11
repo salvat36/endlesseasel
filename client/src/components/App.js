@@ -70,7 +70,7 @@ function App() {
           <Shop artworks={artworks} updateArtworks={updateArtworks} />
         </Route>
         <Route path="/user-artworks">
-          <UserArtwork updateUserArtwork={updateUserArtwork} user={user} updateArtworks={updateArtworks}/>
+          <UserArtwork updateUser={updateUser} updateUserArtwork={updateUserArtwork} user={user} updateArtworks={updateArtworks}/>
         </Route>
         <Route path="/contact">
           <Contact />
