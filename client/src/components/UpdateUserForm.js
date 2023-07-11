@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 //! NEED TO PASS USER and updateUser DOWN
 
-const UpdateUserForm = ( {user} ) => {
+const UpdateUserForm = ( {user, updateUser} ) => {
   const history = useHistory()
   const updateSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
@@ -44,7 +44,7 @@ const UpdateUserForm = ( {user} ) => {
   });
   return (
     <div>
-      <h1> Please Login or Signup!</h1>
+      <h1>Edit Profile Form</h1>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Username: </label>
