@@ -2,13 +2,18 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import UpdateUserForm from "./UpdateUserForm";
 
-const UserArtwork = ({ user, updateArtworks, updateUserArtwork, updateUser }) => {
-  const history = useHistory()
-  const [showForm, setShowForm] = useState(false)
+const UserArtwork = ({
+  user,
+  updateArtworks,
+  updateUserArtwork,
+  updateUser,
+}) => {
+  const history = useHistory();
+  const [showForm, setShowForm] = useState(false);
 
   const toggleForm = () => {
-    setShowForm(showForm => !showForm)
-  }
+    setShowForm((showForm) => !showForm);
+  };
 
   const handleDeleteUserArtwork = (id) => {
     fetch(`/user-artworks/${id}`, { method: "DELETE" }).then((res) => {
@@ -20,16 +25,15 @@ const UserArtwork = ({ user, updateArtworks, updateUserArtwork, updateUser }) =>
   };
 
   const handleDeleteUser = () => {
-    fetch(`users/${user.id}`, { method: 'DELETE'})
-      .then ((res) => {
-        if (res.ok) {
-          updateUser(null)
-          history.push('/login')
-        } else {
-          alert('Unable to delete user')
-        }
-      })
-  }
+    fetch(`users/${user.id}`, { method: "DELETE" }).then((res) => {
+      if (res.ok) {
+        updateUser(null);
+        history.push("/login");
+      } else {
+        alert("Unable to delete user");
+      }
+    });
+  };
 
   const userArtworksList = user?.artworks.map((artwork) => (
     <>
@@ -46,7 +50,7 @@ const UserArtwork = ({ user, updateArtworks, updateUserArtwork, updateUser }) =>
       <div>User Profile for {user?.username} </div>
       <button onClick={handleDeleteUser}>Delete Profile</button>
       <button onClick={toggleForm}>Edit Profile</button>
-      {showForm? (<UpdateUserForm user={user} updateUser={updateUser}/>) : null}
+      {showForm ? <UpdateUserForm user={user} updateUser={updateUser} /> : null}
       <div>{userArtworksList}</div>
     </>
   );

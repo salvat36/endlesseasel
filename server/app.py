@@ -90,22 +90,22 @@ class UserById(Resource):
         if user:
             return make_response(user.to_dict(), 200)
         return make_response({"error": "User ID not found"}, 404)
-    
+
     def patch(self, id):
-        if 'user_id' not in session:
-            return make_response({'error': 'Unauthorized'}, 401)
+        if "user_id" not in session:
+            return make_response({"error": "Unauthorized"}, 401)
         try:
-            updated_user = User.query.filter_by(id = session.get('user_id')).first()
+            updated_user = User.query.filter_by(id=session.get("user_id")).first()
             if not updated_user:
-                return make_response({'error': 'User not found in database'}, 404)
+                return make_response({"error": "User not found in database"}, 404)
             data = request.get_json()
-            updated_user.username = data.get('username')
-            updated_user.password = data.get('password')
-            updated_user.email = data.get('email')
+            updated_user.username = data.get("username")
+            updated_user.password = data.get("password")
+            updated_user.email = data.get("email")
             db.session.commit()
             return make_response(updated_user.to_dict(), 200)
         except Exception as e:
-            return make_response({'error': str(e)}, 422)
+            return make_response({"error": str(e)}, 422)
 
     def delete(self, id):
         user = db.session.get(User, id)
@@ -146,13 +146,12 @@ class UserArtworks(Resource):
     def get(self):
         user_artworks = [ua.to_dict() for ua in UserArtwork.query.all()]
         return make_response(user_artworks, 200)
-    
+
     def post(self):
         data = request.get_json()
         try:
             new_UserArtwork = UserArtwork(
-                user_id = session['user_id'],
-                artwork_id = request.get_json()['id']
+                user_id=session.get('user_id'), artwork_id=request.get_json()["id"]
             )
             db.session.add(new_UserArtwork)
             db.session.commit()
@@ -167,18 +166,19 @@ api.add_resource(UserArtworks, "/user-artworks")
 # View for ONE UserArtwork
 class UserArtworkById(Resource):
     def get(self, id):
-        user_artwork = db.session.get(UserArtwork, id)
-        if user_artwork:
+        if user_artwork := db.session.get(UserArtwork, id):
             return make_response(user_artwork.to_dict(), 200)
         return make_response({"error": "UserArtwork not found"}, 404)
-    
+
     def delete(self, id):
-        user_artwork = db.session.get(UserArtwork, id)
-        if user_artwork:
+        user_id = session.get("user_id")
+        if user_artwork := UserArtwork.query.filter_by(
+            user_id=user_id, artwork_id=id
+        ).first():
             db.session.delete(user_artwork)
             db.session.commit()
-            return make_response('', 200)
-        return make_response({'error': 'UserArtwork not found'})
+            return make_response("", 200)
+        return make_response({"error": "UserArtwork not found"})
 
 
 api.add_resource(UserArtworkById, "/user-artworks/<int:id>")

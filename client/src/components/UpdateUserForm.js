@@ -1,12 +1,9 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
-
-//! NEED TO PASS USER and updateUser DOWN
-
-const UpdateUserForm = ( {user, updateUser} ) => {
-  const history = useHistory()
+const UpdateUserForm = ({ user, updateUser }) => {
+  const history = useHistory();
   const updateSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
 
@@ -54,7 +51,7 @@ const UpdateUserForm = ( {user, updateUser} ) => {
             value={formik.values.username}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='New Username'
+            placeholder="New Username"
           />
           {formik.errors.username && formik.touched.username}{" "}
           <div>{formik.errors.username}</div>
@@ -67,7 +64,7 @@ const UpdateUserForm = ( {user, updateUser} ) => {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='New Password'
+            placeholder="New Password"
           />
           {formik.errors.password && formik.touched.password}{" "}
           <div>{formik.errors.password}</div>
@@ -80,7 +77,7 @@ const UpdateUserForm = ( {user, updateUser} ) => {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder='New Email'
+            placeholder="New Email"
           />
           {formik.errors.email && formik.touched.email}{" "}
           <div>{formik.errors.email}</div>
