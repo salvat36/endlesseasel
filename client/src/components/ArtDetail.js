@@ -21,6 +21,7 @@ const ArtDetail = ({ updateUser, user }) => {
     updateUser({...user, artworks: [...user.artworks, artwork]});
   };
 
+  // ! REFACTOR TO REVIEWS COMPONENT?
   const mappedReviews = reviews?.map((review) => (
     <ul>
     <li>Customer Rating: {review.rating}/10</li>
@@ -42,6 +43,10 @@ const ArtDetail = ({ updateUser, user }) => {
     });
   };
 
+  // const handleAddReview = () => {
+
+  // }
+
   return (
     <div>
       <h1>Art Detail</h1>
@@ -50,6 +55,7 @@ const ArtDetail = ({ updateUser, user }) => {
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
       <button onClick={handleAddArtwork}>Add to Collection</button>
+      {/* <button onClick={handleAddReview}>Add Review</button> */}
       <ul>
         {mappedReviews}
       </ul>
