@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 
 const UserArtwork = ({ user, updateArtworks, updateUserArtwork, updateUser }) => {
   const history = useHistory()
+  const [showForm, setShowForm] = useState(false)
   const handleDeleteUserArtwork = (id) => {
     fetch(`/user-artworks/${id}`, { method: "DELETE" }).then((res) => {
       if (res.ok) {
