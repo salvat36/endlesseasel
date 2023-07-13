@@ -2,17 +2,18 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 
-const CommentForm = ( {reviews, handleAddReview} ) => {
+const CommentForm = ( {handleAddReview, artwork_id} ) => {
   const history = useHistory()
   const updateSchema = yup.object().shape({
     rating: yup.number().required("Rating is required").min(1).max(10),
     description: yup.string().required("Description is required").min(5).max(100),
   });
 
+
   const formik = useFormik({
     initialValues: {
-      rating: reviews.rating,
-      description: reviews.description,
+      rating: "",
+      description: "",
     },
     validationSchema: updateSchema,
     onSubmit: (values, { resetForm }) => {
@@ -21,13 +22,12 @@ const CommentForm = ( {reviews, handleAddReview} ) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({...values, artwork_id : artwork_id}),
       }).then((res) => {
         if (res.ok) {
           res.json().then((res) => {
             handleAddReview(res);
             resetForm();
-            // history.push("/shop");
           });
         } else {
           res.json().then((error) => console.log([error.error]));

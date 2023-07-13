@@ -68,7 +68,7 @@ const ArtDetail = ({ updateUser, user }) => {
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
       <button onClick={handleAddArtwork}>Add to Collection</button>
-      <CommentForm reviews={reviews} handleAddReview={handleAddReview} />
+      <CommentForm reviews={reviews} handleAddReview={handleAddReview} artwork_id={artwork.id} />
       <ul>{mappedReviews}</ul>
     </div>
   );

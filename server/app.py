@@ -194,7 +194,12 @@ class Reviews(Resource):
     def post(self):
         data = request.get_json()
         try:
-            new_review = Review(**data)
+            new_review = Review(
+                user_id = session.get('user_id'),
+                rating = data.get('rating'),
+                description = data.get('description'),
+                artwork_id = data.get('artwork_id')
+            )
             db.session.add(new_review)
             db.session.commit()
             return make_response(new_review.to_dict(), 201)
