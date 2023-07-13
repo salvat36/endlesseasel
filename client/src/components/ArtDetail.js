@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import CommentForm from "./CommentForm";
 
 const ArtDetail = ({ updateUser, user }) => {
   const [artwork, setArtwork] = useState([]);
@@ -39,6 +40,7 @@ const ArtDetail = ({ updateUser, user }) => {
       <li>Customer Review: {review.description}</li>
     </ul>
   ));
+  // !!!!!!!!!!!!!!!!!!!!
 
   const handleAddArtwork = () => {
     fetch("/user-artworks", {
@@ -54,9 +56,9 @@ const ArtDetail = ({ updateUser, user }) => {
     });
   };
 
-  // const handleAddReview = () => {
-
-  // }
+  const handleAddReview = () => {
+  setReviews(reviews)
+  }
 
   return (
     <div>
@@ -66,7 +68,7 @@ const ArtDetail = ({ updateUser, user }) => {
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
       <button onClick={handleAddArtwork}>Add to Collection</button>
-      {/* <button onClick={handleAddReview}>Add Review</button> */}
+      <CommentForm reviews={reviews} handleAddReview={handleAddReview} />
       <ul>{mappedReviews}</ul>
     </div>
   );
