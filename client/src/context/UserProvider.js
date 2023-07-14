@@ -40,7 +40,7 @@ const UserProvider = ({ children }) => {
 
   const handleRegister = (values, resetForm, history) => {
     const { username, password, email } = values;
-    fetch(isLoggedIn ? "/signup" : "/login", {
+    fetch(!isLoggedIn ? "/signup" : "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

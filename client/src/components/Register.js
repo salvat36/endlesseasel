@@ -28,7 +28,7 @@ const Register = () => {
       password: "",
       email: "",
     },
-    validationSchema: registerSchema,
+    validationSchema: !isLoggedIn? registerSchema : null,
     onSubmit: (values, { resetForm }) => {
       handleRegister(values)
       resetForm();
@@ -55,7 +55,7 @@ const Register = () => {
   return (
     <div>
       <h1> Please Login or Signup!</h1>
-      <h2>{!isLoggedIn ? "Already a User?" : "Not a User?"}</h2>
+      <h2>{isLoggedIn ? "Already a User?" : "Not a User?"}</h2>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Username: </label>
@@ -81,6 +81,7 @@ const Register = () => {
           {formik.errors.password && formik.touched.password}{" "}
           <div>{formik.errors.password}</div>
         </>
+        {!isLoggedIn ?
         <>
           <label>Email: </label>
           <input
@@ -92,14 +93,14 @@ const Register = () => {
           />
           {formik.errors.email && formik.touched.email}{" "}
           <div>{formik.errors.email}</div>
-        </>
-        {/* <input type="submit" value={isLoggedIn ? "Login" : "Create"}/> */}
+        </>: null}
+        <input type="submit" value={isLoggedIn ? "Login" : "Create"}/>
           {" "}
+      </form>
           <span>
             {isLoggedIn ? "Need a new account?" : "Already have an account?"}
-            <button onClick={handleLogin}> {isLoggedIn? "Create": "Login"} </button>
+            <button onClick={handleLogin}> {!isLoggedIn? "Create": "Login"} </button>
           </span>
-      </form>
     </div>
   );
 };

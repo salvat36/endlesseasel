@@ -58,8 +58,8 @@ const ArtDetail = () => {
     });
   };
 
-  const handleAddReview = () => {
-    setReviews(reviews);
+  const handleAddReview = (newReview) => {
+    setReviews(reviews => [...reviews, newReview]);
   };
 
   return (
