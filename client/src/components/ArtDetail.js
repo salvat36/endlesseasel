@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
+import Error from "./Error";
 
 const ArtDetail = () => {
   const [artwork, setArtwork] = useState([]);
@@ -22,16 +23,16 @@ const ArtDetail = () => {
         values[0]
           .json()
           .then(setArtwork)
-          .catch((err) => setError(error.error));
+          .catch((error) => setError(error.error));
       }
       if (values[1].ok) {
         values[1]
           .json()
           .then(setReviews)
-          .catch((err) => setError(error.error));
+          .catch((error) => setError(error.error));
       }
     });
-  }, [id, error.error, setError]);
+  }, [id, setError]);
 
   const addUserArtwork = (artwork) => {
     updateUser({ ...user, artworks: [...user.artworks, artwork] });
@@ -55,7 +56,7 @@ const ArtDetail = () => {
       if (res.ok) {
         addUserArtwork(artwork);
       } else {
-        alert("something went wrong");
+        setError('This already exists in your collection!');
       }
     });
   };
@@ -71,6 +72,7 @@ const ArtDetail = () => {
       <h2>Genre: {genre}</h2>
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
+      {error? <Error/> : <></>}
       <button onClick={handleAddArtwork}>Add to Collection</button>
       <CommentForm
         reviews={reviews}
