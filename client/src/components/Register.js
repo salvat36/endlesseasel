@@ -99,7 +99,7 @@ const Register = () => {
       </form>
           <span>
             {isLoggedIn ? "Need a new account?" : "Already have an account?"}
-            <button onClick={handleLogin}> {!isLoggedIn? "Create": "Login"} </button>
+            <button onClick={handleLogin}> {isLoggedIn? "Create": "Login"} </button>
           </span>
     </div>
   );
