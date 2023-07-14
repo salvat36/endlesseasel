@@ -8,7 +8,7 @@ const UpdateUserForm = () => {
   const history = useHistory();
   const {user, updateUser} = useContext(UserContext)
   const updateSchema = yup.object().shape({
-    username: yup.string().required("Username is required").min(5).max(30),
+    username: yup.string().required("Username is required").min(8).max(30),
 
     password: yup.string().required("Password is required").min(8).max(100),
 

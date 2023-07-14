@@ -44,7 +44,14 @@ class User(db.Model, SerializerMixin):
     serialize_only = ('id', 'username', 'email', 'cart', 'artworks')
 
 #! Add Validations
-
+    @validates('username')
+    def validate_username(self, username):
+        if type(username) not in [str] or not range(8-31):
+            raise ValueError('Username length must be between 8-30 characters')
+        return username
+    
+    
+    
 # User Representation
     def __repr__(self):
         return f'User {self.id}, {self.username}, {self.email}'
