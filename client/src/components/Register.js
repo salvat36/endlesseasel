@@ -10,6 +10,7 @@ const Register = () => {
   const history = useHistory();
   const { handleRegister, handleLogin, isLoggedIn } = useContext(UserContext);
   const { error } = useContext(ErrorContext)
+  const { user } = useContext(UserContext);
 
   const registerSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
@@ -35,7 +36,12 @@ const Register = () => {
       history.push("/");
     },
   });
+
+  if (user) {
+    return null;
+  }
   return (
+
     <div>
       <h1> Please Login or Signup!</h1>
       <h2>{isLoggedIn ? "Already a User?" : "Not a User?"}</h2>

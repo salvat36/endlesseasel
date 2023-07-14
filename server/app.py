@@ -51,7 +51,7 @@ def login():
             session["user_id"] = user.id
             return make_response(user.to_dict(), 200)
         else:
-            raise ValueError('Incorrect username or password')
+            raise ValueError("Incorrect username or password")
     except Exception as e:
         return make_response({"error": str(e)}, 401)
 
@@ -110,12 +110,16 @@ class UserById(Resource):
             return make_response({"error": str(e)}, 422)
 
     def delete(self, id):
-        user = db.session.get(User, id)
-        if user:
-            db.session.delete(user)
-            db.session.commit()
-            return make_response("", 200)
-        return make_response({"error": "User ID not found"})
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
+        try:
+            user = db.session.get(User, id)
+            if user:
+                db.session.delete(user)
+                db.session.commit()
+                return make_response("", 200)
+        except Exception as e:
+            return make_response({"error": str(e)})
 
 
 api.add_resource(UserById, "/users/<int:id>")
@@ -134,10 +138,11 @@ api.add_resource(Artworks, "/artworks")
 # Views for ONE Artwork
 class ArtworkById(Resource):
     def get(self, id):
-        artwork = db.session.get(Artwork, id)
-        if artwork:
+        try:
+            artwork = db.session.get(Artwork, id)
             return make_response(artwork.to_dict(), 200)
-        return make_response({"error": "Artwork not found"}, 404)
+        except Exception as e:
+            return make_response({"error": str(e)}, 404)
 
 
 api.add_resource(ArtworkById, "/artworks/<int:id>")
@@ -153,8 +158,7 @@ class UserArtworks(Resource):
         data = request.get_json()
         try:
             new_UserArtwork = UserArtwork(
-                user_id=session.get("user_id"), 
-                artwork_id=request.get_json()["id"]
+                user_id=session.get("user_id"), artwork_id=request.get_json()["id"]
             )
             db.session.add(new_UserArtwork)
             db.session.commit()
@@ -197,10 +201,10 @@ class Reviews(Resource):
         data = request.get_json()
         try:
             new_review = Review(
-                user_id = session.get('user_id'),
-                rating = data.get('rating'),
-                description = data.get('description'),
-                artwork_id = data.get('artwork_id')
+                user_id=session.get("user_id"),
+                rating=data.get("rating"),
+                description=data.get("description"),
+                artwork_id=data.get("artwork_id"),
             )
             db.session.add(new_review)
             db.session.commit()
@@ -214,9 +218,14 @@ api.add_resource(Reviews, "/reviews")
 
 class ReviewsByArtworkId(Resource):
     def get(self, artwork_id):
-        reviews = [r.to_dict() for r in Review.query.filter_by(artwork_id = artwork_id).all()]
+        reviews = [
+            r.to_dict() for r in Review.query.filter_by(artwork_id=artwork_id).all()
+        ]
         return make_response(reviews, 200)
-api.add_resource(ReviewsByArtworkId, '/artworks/<int:artwork_id>/reviews')
+
+
+api.add_resource(ReviewsByArtworkId, "/artworks/<int:artwork_id>/reviews")
+
 
 # View for ONE Review
 class ReviewById(Resource):
