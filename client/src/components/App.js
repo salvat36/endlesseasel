@@ -10,10 +10,8 @@ import UserArtwork from "./UserArtwork";
 import UserProvider from "../context/UserProvider";
 import ErrorProvider from "../context/ErrorProvider";
 
-
 function App() {
   const [artworks, setArtworks] = useState([]);
-  const history = useHistory();
 
   const updateArtworks = (artworks) => {
     setArtworks(artworks);

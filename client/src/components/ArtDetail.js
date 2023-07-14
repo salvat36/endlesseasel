@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { UserContext } from "../context/UserProvider";
+import { ErrorContext } from "../context/ErrorProvider";
 
 const ArtDetail = () => {
   const [artwork, setArtwork] = useState([]);
@@ -10,6 +11,7 @@ const ArtDetail = () => {
   const { id } = useParams();
   const { genre, price, title, image } = artwork;
   const { updateUser, user } = useContext(UserContext);
+  const {setError, error} = useContext(ErrorContext)
 
   useEffect(() => {
     Promise.all([
@@ -17,19 +19,19 @@ const ArtDetail = () => {
       fetch(`/artworks/${id}/reviews`),
     ]).then((values) => {
       if (values[0].ok) {
-        values[0].json().then(setArtwork);
-      } else {
-        alert("Artwork Not Found");
+        values[0]
+          .json()
+          .then(setArtwork)
+          .catch((err) => setError(error.error));
       }
-
       if (values[1].ok) {
         values[1]
           .json()
           .then(setReviews)
-          .catch((err) => console.log(err));
+          .catch((err) => setError(error.error));
       }
     });
-  }, [id]);
+  }, [id, error.error, setError]);
 
   const addUserArtwork = (artwork) => {
     updateUser({ ...user, artworks: [...user.artworks, artwork] });
@@ -59,7 +61,7 @@ const ArtDetail = () => {
   };
 
   const handleAddReview = (newReview) => {
-    setReviews(reviews => [...reviews, newReview]);
+    setReviews((reviews) => [...reviews, newReview]);
   };
 
   return (
