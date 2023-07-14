@@ -8,6 +8,10 @@ const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
 
+  const handleClick = () => {
+    setIsLoggedIn((isLoggedIn) => !isLoggedIn);
+  };
+
   const updateUser = (user) => {
     setUser(user);
   };
@@ -25,10 +29,6 @@ const UserProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  const handleClick = () => {
-    setIsLoggedIn((isLoggedIn) => !isLoggedIn);
-  };
-
   const handleLogoutClick = () => {
     fetch("/logout", { method: "DELETE" }).then((res) => {
       if (res.ok) {
@@ -40,7 +40,7 @@ const UserProvider = ({ children }) => {
 
   const handleRegister = (values, resetForm, history) => {
     const { username, password, email } = values;
-    fetch(user? "/signup" : "/login", {
+    fetch(isLoggedIn ? "/signup" : "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,4 +73,4 @@ const UserProvider = ({ children }) => {
 };
 
 export default UserProvider;
-export {UserContext}
+export { UserContext };
