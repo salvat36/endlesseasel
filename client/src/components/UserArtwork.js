@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UpdateUserForm from "./UpdateUserForm";
+import { UserContext } from "../context/UserProvider";
 
-const UserArtwork = ({
-  user,
-  updateArtworks,
-  updateUserArtwork,
-  updateUser,
-}) => {
+const UserArtwork = () => {
   const history = useHistory();
   const [showForm, setShowForm] = useState(false);
+  const {updateUser, user} = useContext(UserContext)
 
   const toggleForm = () => {
     setShowForm((showForm) => !showForm);
@@ -35,6 +32,12 @@ const UserArtwork = ({
     });
   };
 
+  const updateUserArtwork = (id) => {
+    updateUser(
+      {...user, artworks: user.artworks.filter(artwork => (id !== artwork.id))}
+  )
+  }
+
   const userArtworksList = user?.artworks.map((artwork) => (
     <>
       <div key={artwork.id}> {artwork.title}</div>
@@ -50,7 +53,7 @@ const UserArtwork = ({
       <div>User Profile for {user?.username} </div>
       <button onClick={handleDeleteUser}>Delete Profile</button>
       <button onClick={toggleForm}>Edit Profile</button>
-      {showForm ? <UpdateUserForm user={user} updateUser={updateUser} /> : null}
+      {showForm ? <UpdateUserForm /> : null}
       <div>{userArtworksList}</div>
     </>
   );

@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import CommentForm from "./CommentForm";
+import { UserContext } from "../context/UserProvider";
 
-const ArtDetail = ({ updateUser, user }) => {
+const ArtDetail = () => {
   const [artwork, setArtwork] = useState([]);
   const [reviews, setReviews] = useState([]);
   const history = useHistory();
   const { id } = useParams();
   const { genre, price, title, image } = artwork;
+  const {updateUser, user} = useContext(UserContext)
 
   useEffect(() => {
     Promise.all([

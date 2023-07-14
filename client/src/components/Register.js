@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { UserContext } from "../context/UserProvider";
 
-const Register = ({ updateUser }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Register = () => {
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
+  const {user, handleClick, handleRegister, resetForm} = useContext(UserContext)
 
-  const handleClick = () => {
-    setIsLoggedIn((isLoggedIn) => !isLoggedIn);
-  };
+  // const handleClick = () => {
+  //   setIsLoggedIn((isLoggedIn) => !isLoggedIn);
+  // };
 
   const registerSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
@@ -27,29 +29,31 @@ const Register = ({ updateUser }) => {
     },
     validationSchema: registerSchema,
     onSubmit: (values, { resetForm }) => {
-      fetch(isLoggedIn ? "/signup" : "/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }).then((res) => {
-        if (res.ok) {
-          res.json().then((res) => {
-            updateUser(res);
-            resetForm();
-            history.push("/");
-          });
-        } else {
-          res.json().then((error) => console.log([error.error]));
-        }
-      });
+      handleRegister(values)
+      resetForm()
+      // fetch(isLoggedIn ? "/signup" : "/login", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(values),
+      // }).then((res) => {
+      //   if (res.ok) {
+      //     res.json().then((res) => {
+      //       updateUser(res);
+      //       resetForm();
+      //       history.push("/");
+      //     });
+      //   } else {
+      //     res.json().then((error) => console.log([error.error]));
+      //   }
+      // });
     },
   });
   return (
     <div>
       <h1> Please Login or Signup!</h1>
-      <h2>{isLoggedIn? 'Already a User?' : 'Not a User?'}</h2>
+      <h2>{user? 'Already a User?' : 'Not a User?'}</h2>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Username: </label>
@@ -89,7 +93,7 @@ const Register = ({ updateUser }) => {
         </>
         <button type="submit" onClick={handleClick}>
           {" "}
-          {isLoggedIn ? "Login" : "Create"}
+          {user ? "Login" : "Create"}
         </button>
       </form>
     </div>

@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../context/UserProvider";
 
-const UpdateUserForm = ({ user, updateUser }) => {
+const UpdateUserForm = () => {
   const history = useHistory();
+  const {user, updateUser} = useContext(UserContext)
   const updateSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
 
@@ -15,7 +18,7 @@ const UpdateUserForm = ({ user, updateUser }) => {
   const formik = useFormik({
     initialValues: {
       username: user.username,
-      password: user.password,
+      password: '',
       email: user.email,
     },
     validationSchema: updateSchema,
