@@ -9,7 +9,7 @@ const ArtDetail = () => {
   const history = useHistory();
   const { id } = useParams();
   const { genre, price, title, image } = artwork;
-  const {updateUser, user} = useContext(UserContext)
+  const { updateUser, user } = useContext(UserContext);
 
   useEffect(() => {
     Promise.all([
@@ -59,8 +59,8 @@ const ArtDetail = () => {
   };
 
   const handleAddReview = () => {
-  setReviews(reviews)
-  }
+    setReviews(reviews);
+  };
 
   return (
     <div>
@@ -70,7 +70,11 @@ const ArtDetail = () => {
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
       <button onClick={handleAddArtwork}>Add to Collection</button>
-      <CommentForm reviews={reviews} handleAddReview={handleAddReview} artwork_id={artwork.id} />
+      <CommentForm
+        reviews={reviews}
+        handleAddReview={handleAddReview}
+        artwork_id={artwork.id}
+      />
       <ul>{mappedReviews}</ul>
     </div>
   );
