@@ -218,10 +218,13 @@ api.add_resource(Reviews, "/reviews")
 
 class ReviewsByArtworkId(Resource):
     def get(self, artwork_id):
-        reviews = [
-            r.to_dict() for r in Review.query.filter_by(artwork_id=artwork_id).all()
-        ]
-        return make_response(reviews, 200)
+        try:
+            reviews = [
+                r.to_dict() for r in Review.query.filter_by(artwork_id=artwork_id).all()
+            ]
+            return make_response(reviews, 200)
+        except Exception as e:
+            return make_response({'error': str(e)})
 
 
 api.add_resource(ReviewsByArtworkId, "/artworks/<int:artwork_id>/reviews")
