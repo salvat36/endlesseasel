@@ -6,14 +6,17 @@ import { UserContext } from "../context/UserProvider";
 
 const Register = () => {
   const history = useHistory();
-  const { handleRegister, handleLogin, isLoggedIn} = useContext(UserContext);
+  const { handleRegister, handleLogin, isLoggedIn } = useContext(UserContext);
 
   const registerSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
-
     password: yup.string().required("Password is required").min(8).max(100),
-
     email: yup.string().required("Email is required").email().min(5).max(30),
+  });
+
+  const signInSchema = yup.object().shape({
+    username: yup.string().required("Username is required").min(5).max(30),
+    password: yup.string().required("Password is required").min(8).max(100),
   });
 
   const formik = useFormik({
@@ -22,9 +25,9 @@ const Register = () => {
       password: "",
       email: "",
     },
-    validationSchema: !isLoggedIn? registerSchema : null,
+    validationSchema: !isLoggedIn ? registerSchema : signInSchema,
     onSubmit: (values, { resetForm }) => {
-      handleRegister(values)
+      handleRegister(values);
       resetForm();
       history.push("/");
     },
@@ -58,26 +61,29 @@ const Register = () => {
           {formik.errors.password && formik.touched.password}{" "}
           <div>{formik.errors.password}</div>
         </>
-        {!isLoggedIn ?
-        <>
-          <label>Email: </label>
-          <input
-            type="email"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.errors.email && formik.touched.email}{" "}
-          <div>{formik.errors.email}</div>
-        </>: null}
-        <input type="submit" value={isLoggedIn ? "Login" : "Create"}/>
-          {" "}
+        {!isLoggedIn ? (
+          <>
+            <label>Email: </label>
+            <input
+              type="email"
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+            {formik.errors.email && formik.touched.email}{" "}
+            <div>{formik.errors.email}</div>
+          </>
+        ) : null}
+        <input type="submit" value={isLoggedIn ? "Login" : "Create"} />{" "}
       </form>
-          <span>
-            {isLoggedIn ? "Need a new account?" : "Already have an account?"}
-            <button onClick={handleLogin}> {isLoggedIn? "Create": "Login"} </button>
-          </span>
+      <span>
+        {isLoggedIn ? "Need a new account?" : "Already have an account?"}
+        <button onClick={handleLogin}>
+          {" "}
+          {isLoggedIn ? "Create" : "Login"}{" "}
+        </button>
+      </span>
     </div>
   );
 };
