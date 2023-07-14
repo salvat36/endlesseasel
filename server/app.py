@@ -37,6 +37,7 @@ def signup():
         session["user.id"] = new_user.id
         return make_response(new_user.to_dict(), 201)
     except Exception as e:
+        db.session.rollback()
         return make_response({"errors": [str(e)]}, 400)
 
 
@@ -53,16 +54,20 @@ def login():
         else:
             raise ValueError("Incorrect username or password")
     except Exception as e:
-        return make_response({"error": str(e)}, 401)
+        return make_response({"error": [str(e)]}, 401)
 
 
 # Logout Route
 @app.route("/logout", methods=["DELETE"])
 def logout():
-    if session.get("user_id"):
-        session["user_id"] = None
-        return make_response({"message": "Logout successful"}, 204)
-    return make_response({"error": "Unable to logout"})
+    try:
+        if session.get("user_id"):
+            session["user_id"] = None
+            return make_response({"message": "Logout successful"}, 204)
+        else:
+            raise ValueError("User is not logged in")
+    except ValueError as e:
+        return make_response({'error' : str(e)}, 401)
 
 
 # Authenticate Route
