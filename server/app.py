@@ -50,6 +50,8 @@ def login():
         if user and user.authenticate(password_hash):
             session["user_id"] = user.id
             return make_response(user.to_dict(), 200)
+        else:
+            raise ValueError('Password incorrect')
     except Exception as e:
         return make_response({"error": str(e)}, 401)
 

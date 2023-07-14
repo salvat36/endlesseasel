@@ -50,7 +50,22 @@ class User(db.Model, SerializerMixin):
             raise ValueError('Username length must be between 8-30 characters')
         return username
     
+    @validates('password')
+    def validate_password(self, password):
+        if type(password) not in [str] or not range(8-101):
+            raise ValueError('Password length must be between a minimum of 8 characters')
+        
+    @validates('email')
+    def validate_email(self, email):
+        if type(email) not in [str] or not range(5-31):
+            raise ValueError('Email length must be between a minimum of 8 characters')
+        
+        if '@' not in email:
+            raise ValueError('Email must be a valid address')
     
+        return email
+    
+
     
 # User Representation
     def __repr__(self):

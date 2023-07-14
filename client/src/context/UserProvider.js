@@ -54,7 +54,7 @@ const UserProvider = ({ children }) => {
           updateUser(res);
         });
       } else {
-        res.json().then((error) => setError(error.errors));
+        res.json().then((error) => setError(error.error));
       }
     });
   };

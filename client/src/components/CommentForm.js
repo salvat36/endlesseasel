@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
+import { ErrorContext } from "../context/ErrorProvider";
+import Error from "./Error";
 
 const CommentForm = ( {handleAddReview, artwork_id} ) => {
+  const {setError, error} = useContext(ErrorContext)
   const history = useHistory()
   const updateSchema = yup.object().shape({
     rating: yup.number().required("Rating is required").min(1).max(10),
@@ -67,6 +71,7 @@ const CommentForm = ( {handleAddReview, artwork_id} ) => {
         </>
         <button type="submit">Add a Review</button>
       </form>
+      {error? <Error/> : <></>}
     </div>
   );
 };
