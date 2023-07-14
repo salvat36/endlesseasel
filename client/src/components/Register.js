@@ -97,7 +97,7 @@ const Register = () => {
           {" "}
           <span>
             {isLoggedIn ? "Need a new account?" : "Already have an account?"}
-            <button onClick={handleLogin}> {isLoggedIn? "Create": "Login"} </button>
+            <button type='submit' onClick={handleLogin}> {isLoggedIn? "Create": "Login"} </button>
           </span>
       </form>
     </div>
