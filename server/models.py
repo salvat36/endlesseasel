@@ -44,11 +44,11 @@ class User(db.Model, SerializerMixin):
     serialize_only = ('id', 'username', 'email', 'cart', 'artworks')
 
 #! Add Validations
-#     @validates('username')
-#     def validate_username(self, key, username):
-#         if len(username) not in range(8-31):
-#             raise ValueError('Username length must be between 8-30 characters')
-#         return username
+    @validates('username')
+    def validate_username(self, key, username):
+        if len(username) not in range(8, 31):
+            raise ValueError('Username length must be between 8-30 characters')
+        return username
     
 #     @validates('password')
 #     def validate_password(self, key, password):
