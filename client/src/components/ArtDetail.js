@@ -12,7 +12,7 @@ const ArtDetail = () => {
   const { id } = useParams();
   const { genre, price, title, image } = artwork;
   const { updateUser, user } = useContext(UserContext);
-  const {setError, error} = useContext(ErrorContext)
+  const { setError, error } = useContext(ErrorContext);
 
   useEffect(() => {
     Promise.all([
@@ -20,16 +20,14 @@ const ArtDetail = () => {
       fetch(`/artworks/${id}/reviews`),
     ]).then((values) => {
       if (values[0].ok) {
-        values[0]
-          .json()
-          .then(setArtwork)
-          .catch((error) => setError(error.error));
+        values[0].json().then(setArtwork);
+      } else {
+        setError("Artwork with that id cannot be found");
       }
       if (values[1].ok) {
-        values[1]
-          .json()
-          .then(setReviews)
-          .catch((error) => setError(error.error));
+        values[1].json().then(setReviews);
+      } else {
+        setError("Artwork or Review cannot be found");
       }
     });
   }, [id, setError]);
@@ -56,7 +54,7 @@ const ArtDetail = () => {
       if (res.ok) {
         addUserArtwork(artwork);
       } else {
-        setError('This already exists in your collection!');
+        setError("This already exists in your collection!");
       }
     });
   };
@@ -72,7 +70,7 @@ const ArtDetail = () => {
       <h2>Genre: {genre}</h2>
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
-      {error? <Error/> : <></>}
+      {error ? <Error /> : <></>}
       <button onClick={handleAddArtwork}>Add to Collection</button>
       <CommentForm
         reviews={reviews}

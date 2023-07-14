@@ -1,11 +1,13 @@
-import { useContext } from 'react'
+import { useContext } from "react";
 import { ErrorContext } from "../context/ErrorProvider";
 
 const Error = () => {
-const {setError, error} = useContext(ErrorContext)
+  const { error } = useContext(ErrorContext);
   return (
-    <div>{error}</div>
-  )
-}
+    <div>
+      <p>{error}</p>
+    </div>
+  );
+};
 
-export default Error
+export default Error;

@@ -93,10 +93,14 @@ api.add_resource(Users, "/users")
 # Views for ONE User
 class UserById(Resource):
     def get(self, id):
-        user = db.session.get(User, id)
-        if user:
-            return make_response(user.to_dict(), 200)
-        return make_response({"error": "User ID not found"}, 404)
+        try:
+            user = db.session.get(User, id)
+            if user:
+                return make_response(user.to_dict(), 200)
+            else:
+                raise ValueError('No user ID found')
+        except Exception as e:
+            return make_response({"error": str(e)}, 404)
 
     def patch(self, id):
         if "user_id" not in session:
@@ -143,6 +147,8 @@ api.add_resource(Artworks, "/artworks")
 # Views for ONE Artwork
 class ArtworkById(Resource):
     def get(self, id):
+        if "user_id" not in session:
+            return make_response({"error": "Unauthorized"}, 401)
         try:
             artwork = db.session.get(Artwork, id)
             return make_response(artwork.to_dict(), 200)
