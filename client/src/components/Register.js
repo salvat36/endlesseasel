@@ -5,14 +5,8 @@ import * as yup from "yup";
 import { UserContext } from "../context/UserProvider";
 
 const Register = () => {
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
-  const { user, handleRegister, handleLogin, isLoggedIn} =
-    useContext(UserContext);
-
-  // const handleClick = () => {
-  //   updateUser((isLoggedIn) => !isLoggedIn);
-  // };
+  const { handleRegister, handleLogin, isLoggedIn} = useContext(UserContext);
 
   const registerSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
@@ -32,24 +26,7 @@ const Register = () => {
     onSubmit: (values, { resetForm }) => {
       handleRegister(values)
       resetForm();
-      history.push("/shop");
-      // fetch(isLoggedIn ? "/signup" : "/login", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // }).then((res) => {
-      //   if (res.ok) {
-      //     res.json().then((res) => {
-      //       updateUser(res);
-      //       resetForm();
-      //       history.push("/");
-      //     });
-      //   } else {
-      //     res.json().then((error) => console.log([error.error]));
-      //   }
-      // });
+      history.push("/");
     },
   });
   return (

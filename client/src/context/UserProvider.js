@@ -1,5 +1,6 @@
-import { useEffect, useState, createContext } from "react";
+import { useEffect, useState, createContext, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { ErrorContext } from "../context/ErrorProvider";
 
 const UserContext = createContext();
 
@@ -7,6 +8,7 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
+  const { setError } = useContext(ErrorContext)
 
   const handleLogin = () => {
     setIsLoggedIn((isLoggedIn) => !isLoggedIn);
@@ -50,10 +52,9 @@ const UserProvider = ({ children }) => {
       if (res.ok) {
         res.json().then((res) => {
           updateUser(res);
-          // history.push("/");
         });
       } else {
-        res.json().then((error) => console.log([error.error]));
+        res.json().then((error) => setError(error.errors));
       }
     });
   };

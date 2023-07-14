@@ -8,40 +8,15 @@ import Register from "./Register";
 import ArtDetail from "./ArtDetail";
 import UserArtwork from "./UserArtwork";
 import UserProvider from "../context/UserProvider";
+import ErrorProvider from "../context/ErrorProvider";
 
 function App() {
-  // const [user, setUser] = useState(null);
   const [artworks, setArtworks] = useState([]);
   const history = useHistory();
 
   const updateArtworks = (artworks) => {
     setArtworks(artworks);
   };
-
-  // const updateUser = (user) => {
-  //   setUser(user);
-  // };
-
-  // const updateUserArtwork = (id) => {
-  //   setUser(currentUser => (
-  //     {...currentUser, artworks: currentUser.artworks.filter(artwork => (id !== artwork.id))}
-  //   ))
-  // }
-
-  // useEffect(() => {
-  //   const fetchUser = () => {
-  //     fetch("/authenticate").then((res) => {
-  //       if (res.ok) {
-  //         res
-  //           .json()
-  //           .then(setUser);
-  //       } else {
-  //         updateUser(null);
-  //       }
-  //     });
-  //   };
-  //   fetchUser();
-  // }, []);
 
   useEffect(() => {
     fetch("/artworks")
@@ -50,38 +25,33 @@ function App() {
       .catch((err) => console.log(err));
   }, []);
 
-  // const handleLogoutClick = () => {
-  //   fetch('/logout', {method: 'DELETE'})
-  //   .then ((res) => {
-  //     if (res.ok) {
-  //       updateUser(null)
-  //       history.push('/authenticate')
-  //     }
-  //   })
-  // }
-
   return (
     <main>
       <Switch>
-        <UserProvider>
-          <Navigation />
-          <Register />
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/shop">
-            <Shop artworks={artworks} updateArtworks={updateArtworks} />
-          </Route>
-          <Route path="/user-artworks">
-            <UserArtwork updateArtworks={updateArtworks} artworks={artworks} />
-          </Route>
-          <Route path="/contact">
-            <Contact />
-          </Route>
-          <Route path="/artworks/:id">
-            <ArtDetail />
-          </Route>
-        </UserProvider>
+        <ErrorProvider>
+          <UserProvider>
+            <Navigation />
+            <Register />
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/shop">
+              <Shop artworks={artworks} updateArtworks={updateArtworks} />
+            </Route>
+            <Route path="/user-artworks">
+              <UserArtwork
+                updateArtworks={updateArtworks}
+                artworks={artworks}
+              />
+            </Route>
+            <Route path="/contact">
+              <Contact />
+            </Route>
+            <Route path="/artworks/:id">
+              <ArtDetail />
+            </Route>
+          </UserProvider>
+        </ErrorProvider>
       </Switch>
     </main>
   );
