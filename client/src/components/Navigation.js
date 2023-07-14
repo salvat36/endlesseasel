@@ -8,10 +8,10 @@ const Navigation = () => {
   const { handleLogoutClick, user } = useContext(UserContext)
   return (
     <>
-      {user? <button onClick={handleLogoutClick}>Logout</button> : null}
+      {user && <button onClick={handleLogoutClick}>Logout</button>}
       <Link to="/"> Home </Link>
-      <Link to="/shop"> Shop </Link>
-      <Link to="/user-artworks"> Profile </Link>
+      {user && <Link to="/shop"> Shop </Link>}
+      {user && <Link to="/user-artworks"> Profile </Link>}
       <Link to="/contact"> Contact Us</Link>
     </>
   );
