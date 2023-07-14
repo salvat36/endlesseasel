@@ -8,7 +8,7 @@ const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
 
-  const handleClick = () => {
+  const handleLogin = () => {
     setIsLoggedIn((isLoggedIn) => !isLoggedIn);
   };
 
@@ -50,7 +50,7 @@ const UserProvider = ({ children }) => {
       if (res.ok) {
         res.json().then((res) => {
           updateUser(res);
-          history.push("/");
+          // history.push("/");
         });
       } else {
         res.json().then((error) => console.log([error.error]));
@@ -60,11 +60,12 @@ const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        handleClick,
+        handleLogin,
         handleRegister,
         updateUser,
         user,
         handleLogoutClick,
+        isLoggedIn,
       }}
     >
       {children}

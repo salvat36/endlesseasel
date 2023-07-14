@@ -7,7 +7,7 @@ import { UserContext } from "../context/UserProvider";
 const Register = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
-  const { user, handleClick, handleRegister } =
+  const { user, handleRegister, handleLogin, isLoggedIn} =
     useContext(UserContext);
 
   // const handleClick = () => {
@@ -30,8 +30,9 @@ const Register = () => {
     },
     validationSchema: registerSchema,
     onSubmit: (values, { resetForm }) => {
-      handleRegister(values);
+      handleRegister(values)
       resetForm();
+      history.push("/shop");
       // fetch(isLoggedIn ? "/signup" : "/login", {
       //   method: "POST",
       //   headers: {
@@ -54,7 +55,7 @@ const Register = () => {
   return (
     <div>
       <h1> Please Login or Signup!</h1>
-      <h2>{user ? "Already a User?" : "Not a User?"}</h2>
+      <h2>{!isLoggedIn ? "Already a User?" : "Not a User?"}</h2>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Username: </label>
@@ -92,10 +93,12 @@ const Register = () => {
           {formik.errors.email && formik.touched.email}{" "}
           <div>{formik.errors.email}</div>
         </>
-        <button type="submit" onClick={handleClick}>
+        {/* <input type="submit" value={isLoggedIn ? "Login" : "Create"}/> */}
           {" "}
-          {user ? "Login" : "Create"}
-        </button>
+          <span>
+            {isLoggedIn ? "Need a new account?" : "Already have an account?"}
+            <button onClick={handleLogin}> {isLoggedIn? "Create": "Login"} </button>
+          </span>
       </form>
     </div>
   );
