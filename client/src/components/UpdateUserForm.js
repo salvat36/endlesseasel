@@ -3,10 +3,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
+import { ErrorContext } from "../context/ErrorProvider";
+import Error from "./Error";
 
 const UpdateUserForm = () => {
   const history = useHistory();
   const {user, updateUser} = useContext(UserContext)
+  const {error, setError} = useContext(ErrorContext)
   const updateSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(8).max(30),
 
@@ -37,7 +40,7 @@ const UpdateUserForm = () => {
             history.push("/user-artworks");
           });
         } else {
-          res.json().then((error) => console.log([error.error]));
+          res.json().then((error) => setError([error.error]));
         }
       });
     },
@@ -87,6 +90,7 @@ const UpdateUserForm = () => {
         </>
         <button type="submit">Update Profile</button>
       </form>
+      {error? <Error/> : <></>}
     </div>
   );
 };

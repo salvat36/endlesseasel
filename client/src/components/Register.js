@@ -3,10 +3,13 @@ import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { UserContext } from "../context/UserProvider";
+import { ErrorContext } from "../context/ErrorProvider";
+import Error from "./Error";
 
 const Register = () => {
   const history = useHistory();
   const { handleRegister, handleLogin, isLoggedIn } = useContext(UserContext);
+  const { error } = useContext(ErrorContext)
 
   const registerSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
@@ -84,6 +87,7 @@ const Register = () => {
           {isLoggedIn ? "Create" : "Login"}{" "}
         </button>
       </span>
+      {error? <Error/> : <></>}
     </div>
   );
 };

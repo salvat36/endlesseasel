@@ -34,7 +34,7 @@ const CommentForm = ( {handleAddReview, artwork_id} ) => {
             resetForm();
           });
         } else {
-          res.json().then((error) => console.log([error.error]));
+          res.json().then((error) => setError([error.error]));
         }
       });
     },

@@ -51,7 +51,7 @@ def login():
             session["user_id"] = user.id
             return make_response(user.to_dict(), 200)
         else:
-            raise ValueError('Password incorrect')
+            raise ValueError('Incorrect username or password')
     except Exception as e:
         return make_response({"error": str(e)}, 401)
 
