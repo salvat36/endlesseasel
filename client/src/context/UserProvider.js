@@ -58,7 +58,7 @@ const UserProvider = ({ children }) => {
         if (url === "/login") {
           setError("Incorrect Username or Password");
         } else {
-          setError("Username already exists");
+          setError("A user already exists with that Username or Email");
         }
       }
     });
