@@ -33,7 +33,7 @@ def createImageFromPrompt():
         size="256x256",
     )
 
-    image_url= {image['data'][0]['url']}
+    image_url= image['data'][0]['url']
     return {'image_url': image_url}
 
 

@@ -3,7 +3,7 @@ import PromptForm from './PromptForm'
 
 const Create = ( { updateArtworks } ) => {
   const handleAddPrompt = ( newPromptArtwork ) => {
-    updateArtworks((artworks) => [...artworks, newPromptArtwork])
+    updateArtworks((artworks) => [newPromptArtwork, ...artworks])
   }
   return (
     <>
