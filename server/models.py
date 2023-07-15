@@ -43,28 +43,28 @@ class User(db.Model, SerializerMixin):
 
     serialize_only = ("id", "username", "email", "cart", "artworks")
 
-    # User Validations
+    #User Validations
     @validates("username")
     def validate_username(self, key, username):
-        if len(username) not in range(8, 31):
+        if not 8 <= len(username) <= 30:
             raise ValueError("Username length must be between 8-30 characters")
         return username
 
     @validates("password")
     def validate_password(self, key, password):
-        if type(password) not in [str] or not range(8, 101):
+        if not password or not isinstance(password, str) or not (8 <= len(password) <= 100):
             raise ValueError(
                 "Password length must be between a minimum of 8 characters"
             )
 
     @validates("email")
     def validate_email(self, key, email):
-        if type(email) not in [str] or not range(5, 31):
+        if not email or not isinstance(email, str) or not (8 <= len(email) <= 100):
             raise ValueError("Email length must be between a minimum of 8 characters")
-        
+
         duplicate_email = User.query.filter(User.email == email).first()
         if duplicate_email:
-            raise ValueError('Email address is already registered')
+            raise ValueError("Email address is already registered")
 
         return email
 
@@ -97,21 +97,20 @@ class Artwork(db.Model, SerializerMixin):
     serialize_only = ("id", "user_id", "genre", "price", "title", "image", "reviews")
 
     # Artwork Validations
-    @validates('genre')
+    @validates("genre")
     def validate_genre(self, key, genre):
-        if not genre:
-            raise ValueError("Artwork must include a Genre")
+        if not genre or not isinstance(genre, str):
+            raise ValueError("Artwork must include a Genre of type string")
 
-    @validates('price')
+    @validates("price")
     def validate_price(self, key, price):
         if not price or not isinstance(price, (int, float)):
             raise ValueError("Artwork must include a valid price")
 
-    @validates('title')
+    @validates("title")
     def validate_title(self, key, title):
-        if not title or title not in type(str):
-            raise ValueError("Artwork must include a title")
-    
+        if not title or not isinstance(title, str):
+            raise ValueError("Artwork must include a title of type string")
 
     # Artwork Representation
     def __repr__(self):
