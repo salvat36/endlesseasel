@@ -96,21 +96,21 @@ class Artwork(db.Model, SerializerMixin):
     # Artwork Serialization
     serialize_only = ("id", "user_id", "genre", "price", "title", "image", "reviews")
 
-    # Artwork Validations
-    @validates("genre")
-    def validate_genre(self, key, genre):
-        if not genre or not isinstance(genre, str):
-            raise ValueError("Artwork must include a Genre of type string")
+    # # Artwork Validations
+    # @validates("genre")
+    # def validate_genre(self, key, genre):
+    #     if not genre or not isinstance(genre, str):
+    #         raise ValueError("Artwork must include a Genre of type string")
 
-    @validates("price")
-    def validate_price(self, key, price):
-        if not price or not isinstance(price, (int, float)):
-            raise ValueError("Artwork must include a valid price")
+    # @validates("price")
+    # def validate_price(self, key, price):
+    #     if not price or not isinstance(price, (int, float)):
+    #         raise ValueError("Artwork must include a valid price")
 
-    @validates("title")
-    def validate_title(self, key, title):
-        if not title or not isinstance(title, str):
-            raise ValueError("Artwork must include a title of type string")
+    # @validates("title")
+    # def validate_title(self, key, title):
+    #     if not title or not isinstance(title, str):
+    #         raise ValueError("Artwork must include a title of type string")
 
     # Artwork Representation
     def __repr__(self):
