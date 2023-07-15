@@ -3,14 +3,15 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
+import Error from "./Error";
 
 const PromptForm = ({ handleAddPrompt, user_id }) => {
   const [imageURL, setImageURL] = useState("");
-  const { setError } = useContext(ErrorContext);
+  const { setError, error } = useContext(ErrorContext);
   const history = useHistory();
   const createSchema = yup.object().shape({
-    genre: yup.number().required("Rating is required").min(1).max(10),
-    price: yup.string().required("Description is required").min(5).max(100),
+    genre: yup.string().required("Genre is required").min(1).max(10),
+    price: yup.number().required("Price is required").min(5).max(100),
     title: yup.string().required("Title is Required"),
     prompt: yup.string().required("Image Prompt Required"),
   });
@@ -36,7 +37,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
 
         if (createImageResponse.ok) {
           const imageResponseData = await createImageResponse.json();
-          const imageUrl = imageResponseData.image_url;
+          const imageURL = imageResponseData.image_url;
           setImageURL(imageURL)
 
           const createArtworkResponse = await fetch("/artworks", {
@@ -44,7 +45,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...values, image: imageUrl }),
+            body: JSON.stringify({ ...values, image: imageURL }),
           });
 
           if (createArtworkResponse.ok) {
@@ -130,6 +131,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             </>
           )}
         </div>
+        {error? <Error/> : <></>}
       </form>
     </div>
   );
