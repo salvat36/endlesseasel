@@ -71,7 +71,6 @@ const CommentForm = ( {handleAddReview, artwork_id} ) => {
         </>
         <button type="submit">Add a Review</button>
       </form>
-      {error? <Error/> : <></>}
     </div>
   );
 };

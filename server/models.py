@@ -11,7 +11,7 @@ class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
+    username = db.Column(db.String, unique=True)
     _password_hash = db.Column(db.String)
     email = db.Column(db.String)
     cart = db.Column(db.String)
@@ -39,31 +39,34 @@ class User(db.Model, SerializerMixin):
     reviews = db.relationship("Review", back_populates="user")
     artworks = association_proxy("user_artworks", "artwork")
 
-    #!Add User Serialization
+    # User Serialization
 
     serialize_only = ("id", "username", "email", "cart", "artworks")
 
-    #! Add Validations
+    # User Validations
     @validates("username")
     def validate_username(self, key, username):
         if len(username) not in range(8, 31):
             raise ValueError("Username length must be between 8-30 characters")
         return username
 
-    #     @validates('password')
-    #     def validate_password(self, key, password):
-    #         if type(password) not in [str] or not range(8-101):
-    #             raise ValueError('Password length must be between a minimum of 8 characters')
+    @validates("password")
+    def validate_password(self, key, password):
+        if type(password) not in [str] or not range(8, 101):
+            raise ValueError(
+                "Password length must be between a minimum of 8 characters"
+            )
 
-    #     @validates('email')
-    #     def validate_email(self, key, email):
-    #         if type(email) not in [str] or not range(5-31):
-    #             raise ValueError('Email length must be between a minimum of 8 characters')
+    @validates("email")
+    def validate_email(self, key, email):
+        if type(email) not in [str] or not range(5, 31):
+            raise ValueError("Email length must be between a minimum of 8 characters")
+        
+        duplicate_email = User.query.filter(User.email == email).first()
+        if duplicate_email:
+            raise ValueError('Email address is already registered')
 
-    #         if '@' not in email:
-    #             raise ValueError('Email must be a valid address')
-
-    #         return email
+        return email
 
     # User Representation
     def __repr__(self):
@@ -89,12 +92,26 @@ class Artwork(db.Model, SerializerMixin):
     )
     reviews = db.relationship("Review", back_populates="artwork")
     users = association_proxy("user_artworks", "user")
-    # DO WE NEED TO ADD USER to connect FK user_ID?
 
-    #!Add Artwork Serialization
+    # Artwork Serialization
     serialize_only = ("id", "user_id", "genre", "price", "title", "image", "reviews")
 
-    #! Add Validations
+    # Artwork Validations
+    @validates('genre')
+    def validate_genre(self, key, genre):
+        if not genre:
+            raise ValueError("Artwork must include a Genre")
+
+    @validates('price')
+    def validate_price(self, key, price):
+        if not price or not isinstance(price, (int, float)):
+            raise ValueError("Artwork must include a valid price")
+
+    @validates('title')
+    def validate_title(self, key, title):
+        if not title or title not in type(str):
+            raise ValueError("Artwork must include a title")
+    
 
     # Artwork Representation
     def __repr__(self):
@@ -116,10 +133,8 @@ class Review(db.Model, SerializerMixin):
     user = db.relationship("User", back_populates="reviews")
     artwork = db.relationship("Artwork", back_populates="reviews")
 
-    #!Add Review Serialization
+    # Review Serialization
     serialize_only = ("id", "user_id", "artwork_id", "rating", "description")
-
-    #! Add Validations
 
     # Review Representation
     def __repr__(self):
@@ -140,10 +155,10 @@ class UserArtwork(db.Model, SerializerMixin):
     user = db.relationship("User", back_populates="user_artworks")
     artwork = db.relationship("Artwork", back_populates="user_artworks")
 
-    #!Add UserArtwork Serialization
+    # UserArtwork Serialization
     serialize_only = ("id", "user_id", "artwork_id")
 
-    # #! Add Validations
+    # UserArtwork Validations
     @validates("user_id", "artwork_id")
     def validate_userartwork(self, key, value):
         if (
@@ -151,17 +166,13 @@ class UserArtwork(db.Model, SerializerMixin):
             and hasattr(self, "artwork_id")
             and self.query.filter_by(user_id=value, artwork_id=self.artwork_id).first()
         ):
-            raise ValueError(
-                "The Art already exists in your collection!"
-            )
+            raise ValueError("The Art already exists in your collection!")
         elif (
             key == "artwork_id"
             and hasattr(self, "user_id")
             and self.query.filter_by(user_id=self.user_id, artwork_id=value).first()
         ):
-            raise ValueError(
-                "The Art already exists in your collection!"
-            )
+            raise ValueError("The Art already exists in your collection!")
         return value
 
     # UserArtwork Representation
