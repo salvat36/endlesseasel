@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UpdateUserForm from "./UpdateUserForm";
 import { UserContext } from "../context/UserProvider";
