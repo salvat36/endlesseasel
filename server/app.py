@@ -46,7 +46,7 @@ def createArtworkFromPrompt():
     data = request.get_json()
     try:
         new_artwork = Artwork(
-            user_id=session['user.id'],
+            user_id=session.get('user_id'),
             genre=data.get("genre"),
             price=data.get("price"),
             title=data.get("title"),
