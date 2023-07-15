@@ -1,11 +1,14 @@
 import React from 'react'
 import PromptForm from './PromptForm'
 
-const Create = () => {
+const Create = ( { updateArtworks } ) => {
+  const handleAddPrompt = ( newPromptArtwork ) => {
+    updateArtworks((artworks) => [...artworks, newPromptArtwork])
+  }
   return (
     <>
     <div>Create</div>
-    <PromptForm/>
+    <PromptForm handleAddPrompt={handleAddPrompt}/>
     </>
   )
 }

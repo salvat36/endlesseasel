@@ -51,8 +51,8 @@ function App() {
             <Route path="/artworks/:id">
               <ArtDetail />
             </Route>
-            <Route>
-              < Create path='/create'/>
+            <Route path ='/create'>
+              <Create updateArtworks={updateArtworks}/>
             </Route>
           </UserProvider>
         </ErrorProvider>

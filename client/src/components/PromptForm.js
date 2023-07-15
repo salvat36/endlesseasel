@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
 
 const PromptForm = ({ handleAddPrompt, user_id }) => {
-  const { setError, error } = useContext(ErrorContext);
+  const [imageURL, setImageURL] = useState("");
+  const { setError } = useContext(ErrorContext);
   const history = useHistory();
   const createSchema = yup.object().shape({
     genre: yup.number().required("Rating is required").min(1).max(10),
@@ -120,6 +121,14 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
           <div>{formik.errors.prompt}</div>
         </>
         <button type="submit">Generate a New Image</button>
+        <div>
+          {imageURL && (
+            <>
+              <h2>Generated Image:</h2>
+              <img src={imageURL} alt="Generated Image" />
+            </>
+          )}
+        </div>
       </form>
     </div>
   );
