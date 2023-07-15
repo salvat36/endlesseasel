@@ -14,58 +14,58 @@ from models import User, Review, Artwork, UserArtwork
 
 
 # Home Route
-@app.route("/")
+@app.route('/')
 def home():
-    return """
+    return '''
     <h1>EndlessEasel</h1>
     <img src='https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max' alt='not found' >
-    """
+    '''
 
 
 # Signup Route
-@app.route("/signup", methods=["POST"])
+@app.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     try:
         new_user = User(
-            password_hash=data.get("password"),
-            username=data.get("username"),
-            email=data.get("email"),
+            password_hash=data.get('password'),
+            username=data.get('username'),
+            email=data.get('email'),
         )
         db.session.add(new_user)
         db.session.commit()
-        session["user.id"] = new_user.id
+        session['user.id'] = new_user.id
         return make_response(new_user.to_dict(), 201)
     except Exception as e:
         db.session.rollback()
-        return make_response({"errors": [str(e)]}, 400)
+        return make_response({'errors': [str(e)]}, 400)
 
 
 # Login Route
-@app.route("/login", methods=["POST"])
+@app.route('/login', methods=['POST'])
 def login():
     try:
-        username = request.get_json().get("username")
-        password_hash = request.get_json().get("password")
+        username = request.get_json().get('username')
+        password_hash = request.get_json().get('password')
         user = User.query.filter_by(username=username).first()
         if user and user.authenticate(password_hash):
-            session["user_id"] = user.id
+            session['user_id'] = user.id
             return make_response(user.to_dict(), 200)
         else:
-            raise ValueError("Incorrect username or password")
+            raise ValueError('Incorrect username or password')
     except Exception as e:
-        return make_response({"error": [str(e)]}, 401)
+        return make_response({'error': [str(e)]}, 401)
 
 
 # Logout Route
-@app.route("/logout", methods=["DELETE"])
+@app.route('/logout', methods=['DELETE'])
 def logout():
     try:
-        if session.get("user_id"):
-            session["user_id"] = None
-            return make_response({"message": "Logout successful"}, 204)
+        if session.get('user_id'):
+            session['user_id'] = None
+            return make_response({'message': 'Logout successful'}, 204)
         else:
-            raise ValueError("User is not logged in")
+            raise ValueError('User is not logged in')
     except ValueError as e:
         return make_response({'error' : str(e)}, 401)
 
@@ -128,7 +128,7 @@ class UserById(Resource):
                 db.session.commit()
                 return make_response("", 200)
         except Exception as e:
-            return make_response({"error": str(e)})
+            return make_response({"error": [str(e)]})
 
 
 api.add_resource(UserById, "/users/<int:id>")
@@ -153,7 +153,7 @@ class ArtworkById(Resource):
             artwork = db.session.get(Artwork, id)
             return make_response(artwork.to_dict(), 200)
         except Exception as e:
-            return make_response({"error": str(e)}, 404)
+            return make_response({"errors": [str(e)]}, 404)
 
 
 api.add_resource(ArtworkById, "/artworks/<int:id>")
@@ -162,44 +162,52 @@ api.add_resource(ArtworkById, "/artworks/<int:id>")
 # View for ALL UserArtworks
 class UserArtworks(Resource):
     def get(self):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
         user_artworks = [ua.to_dict() for ua in UserArtwork.query.all()]
         return make_response(user_artworks, 200)
 
     def post(self):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
         data = request.get_json()
         try:
             new_UserArtwork = UserArtwork(
-                user_id=session.get("user_id"), artwork_id=request.get_json()["id"]
+                user_id=session.get('user_id'), artwork_id=request.get_json()['id']
             )
             db.session.add(new_UserArtwork)
             db.session.commit()
             return make_response(new_UserArtwork.to_dict(), 201)
         except Exception as e:
-            return make_response({"errors": [str(e)]}, 400)
+            return make_response({'errors': [str(e)]}, 400)
 
 
-api.add_resource(UserArtworks, "/user-artworks")
+api.add_resource(UserArtworks, '/user-artworks')
 
 
 # View for ONE UserArtwork
 class UserArtworkById(Resource):
     def get(self, id):
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
         if user_artwork := db.session.get(UserArtwork, id):
             return make_response(user_artwork.to_dict(), 200)
-        return make_response({"error": "UserArtwork not found"}, 404)
+        return make_response({'error': 'UserArtwork not found'}, 404)
 
     def delete(self, id):
-        user_id = session.get("user_id")
+        if 'user_id' not in session:
+            return make_response({'error': 'Unauthorized'}, 401)
+        user_id = session.get('user_id')
         if user_artwork := UserArtwork.query.filter_by(
             user_id=user_id, artwork_id=id
         ).first():
             db.session.delete(user_artwork)
             db.session.commit()
-            return make_response("", 200)
-        return make_response({"error": "UserArtwork not found"})
+            return make_response('', 200)
+        return make_response({'error': 'UserArtwork not found'})
 
 
-api.add_resource(UserArtworkById, "/user-artworks/<int:id>")
+api.add_resource(UserArtworkById, '/user-artworks/<int:id>')
 
 
 # View for ALL Reviews
@@ -212,19 +220,19 @@ class Reviews(Resource):
         data = request.get_json()
         try:
             new_review = Review(
-                user_id=session.get("user_id"),
-                rating=data.get("rating"),
-                description=data.get("description"),
-                artwork_id=data.get("artwork_id"),
+                user_id=session.get('user_id'),
+                rating=data.get('rating'),
+                description=data.get('description'),
+                artwork_id=data.get('artwork_id'),
             )
             db.session.add(new_review)
             db.session.commit()
             return make_response(new_review.to_dict(), 201)
         except Exception as e:
-            return make_response({"errors": [str(e)]}, 400)
+            return make_response({'errors': [str(e)]}, 400)
 
 
-api.add_resource(Reviews, "/reviews")
+api.add_resource(Reviews, '/reviews')
 
 
 class ReviewsByArtworkId(Resource):
@@ -238,7 +246,7 @@ class ReviewsByArtworkId(Resource):
             return make_response({'error': str(e)})
 
 
-api.add_resource(ReviewsByArtworkId, "/artworks/<int:artwork_id>/reviews")
+api.add_resource(ReviewsByArtworkId, '/artworks/<int:artwork_id>/reviews')
 
 
 # View for ONE Review
@@ -247,19 +255,19 @@ class ReviewById(Resource):
         review = db.session.get(Review, id)
         if review:
             return make_response(review.to_dict(), 200)
-        return make_response({"error": "Review not found"}, 404)
+        return make_response({'error': 'Review not found'}, 404)
 
     def delete(self, id):
         review = db.session.get(Review, id)
         if review:
             db.session.delete(review)
             db.session.commit()
-            return make_response("", 200)
-        return make_response({"error": "Review ID not found"})
+            return make_response('', 200)
+        return make_response({'error': 'Review ID not found'})
 
 
-api.add_resource(ReviewById, "/reviews/<int:id>")
+api.add_resource(ReviewById, '/reviews/<int:id>')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(port=5555, debug=True, use_debugger=False, use_reloader=False)

@@ -8,7 +8,7 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const history = useHistory();
-  const { setError } = useContext(ErrorContext)
+  const { setError } = useContext(ErrorContext);
 
   const handleLogin = () => {
     setIsLoggedIn((isLoggedIn) => !isLoggedIn);
@@ -42,7 +42,8 @@ const UserProvider = ({ children }) => {
 
   const handleRegister = (values, resetForm, history) => {
     const { username, password, email } = values;
-    fetch(!isLoggedIn ? "/signup" : "/login", {
+    const url = isLoggedIn ? "/login" : "/signup";
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +55,11 @@ const UserProvider = ({ children }) => {
           updateUser(res);
         });
       } else {
-        res.json().then((error) => setError(error.error));
+        if (url === "/login") {
+          setError("Incorrect Username or Password");
+        } else {
+          setError("Username already exists");
+        }
       }
     });
   };
