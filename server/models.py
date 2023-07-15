@@ -13,7 +13,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True)
     _password_hash = db.Column(db.String)
-    email = db.Column(db.String)
+    email = db.Column(db.String, unique=True)
     cart = db.Column(db.String)
 
     # User Password_Hash
@@ -62,9 +62,9 @@ class User(db.Model, SerializerMixin):
         if not email or not isinstance(email, str) or not (8 <= len(email) <= 100):
             raise ValueError("Email length must be between a minimum of 8 characters")
 
-        duplicate_email = User.query.filter(User.email == email).first()
-        if duplicate_email:
-            raise ValueError("Email address is already registered")
+        # duplicate_email = User.query.filter(User.email == email).first()
+        # if duplicate_email:
+        #     raise ValueError("Email address is already registered")
 
         return email
 

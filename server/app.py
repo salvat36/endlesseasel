@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Standard library imports
+import json
 
 # Remote library imports
 from flask import request
@@ -9,8 +10,30 @@ from flask import Flask, request, make_response, session
 
 
 # Local imports
-from config import app, db, api
+from config import app, db, api, openai
 from models import User, Review, Artwork, UserArtwork
+
+
+#1.set prompt to a variable with request.get_json() to grab Data
+#2.create formik form on front end to create request to pass into variable here
+#3.collect response from the api
+#4.add response to the database
+#5.display database data to user as image or do I display response first??
+#6. limit rate requests or et?
+
+#OpenAI Request
+@app.route('/create')
+def create():
+    image = openai.Image.create(
+        prompt="A cute baby sea otter",
+        n=1,
+        size="1024x1024"
+)
+    image = json.load(image)
+    return f'''
+    <h1>EndlessEasel</h1>
+    <img src={image['data'][0]['url']}>
+    '''
 
 
 # Home Route
