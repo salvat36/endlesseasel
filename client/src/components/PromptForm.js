@@ -37,6 +37,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
         if (createImageResponse.ok) {
           const imageResponseData = await createImageResponse.json();
           const imageUrl = imageResponseData.image_url;
+          setImageURL(imageURL)
 
           const createArtworkResponse = await fetch("/artworks", {
             method: "POST",
@@ -125,7 +126,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
           {imageURL && (
             <>
               <h2>Generated Image:</h2>
-              <img src={imageURL} alt="Generated Image" />
+              <img src={imageURL} alt="prompt input here" />
             </>
           )}
         </div>

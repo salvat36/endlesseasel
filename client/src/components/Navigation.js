@@ -13,6 +13,7 @@ const Navigation = () => {
       {user && <Link to="/shop"> Shop </Link>}
       {user && <Link to="/user-artworks"> Profile </Link>}
       <Link to="/contact"> Contact Us</Link>
+      {user && <Link to="/create"> Create Image</Link>}
     </>
   );
 };

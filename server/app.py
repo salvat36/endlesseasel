@@ -23,22 +23,18 @@ from models import User, Review, Artwork, UserArtwork
 
 
 # OpenAI Request
-@app.route("/create")
+@app.route("/create", methods=['POST'])
 def createImageFromPrompt():
     data = request.get_json()
     prompt = data.get('prompt')
     image = openai.Image.create(
-        prompt="A cute baby turtle, ultra realistic, 4k high res, steampunk style",
+        prompt=prompt,
         n=1,
         size="256x256",
     )
 
     image_url= {image['data'][0]['url']}
     return {'image_url': image_url}
-    # return f"""
-    # <h1>EndlessEasel</h1>
-    # <img src={image['data'][0]['url']}>
-    # """
 
 
 @app.route("/artworks", methods=['POST'])
