@@ -24,8 +24,8 @@ const UserArtwork = () => {
   const handleDeleteUser = () => {
     fetch(`users/${user.id}`, { method: "DELETE" }).then((res) => {
       if (res.ok) {
+        history.push("/");
         updateUser(null);
-        history.push("/authenticate");
       } else {
         alert("Unable to delete user");
       }

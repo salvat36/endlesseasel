@@ -47,7 +47,7 @@ const UpdateUserForm = () => {
   });
   return (
     <div>
-      <h1>Edit Profile Form</h1>
+      <h1>Edit Profile</h1>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Username: </label>
