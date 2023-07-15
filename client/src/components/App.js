@@ -6,6 +6,7 @@ import Shop from "./Shop";
 import Contact from "./Contact";
 import Register from "./Register";
 import ArtDetail from "./ArtDetail";
+import Create from "./Create";
 import UserArtwork from "./UserArtwork";
 import UserProvider from "../context/UserProvider";
 import ErrorProvider from "../context/ErrorProvider";
@@ -49,6 +50,9 @@ function App() {
             </Route>
             <Route path="/artworks/:id">
               <ArtDetail />
+            </Route>
+            <Route>
+              < Create path='/create'/>
             </Route>
           </UserProvider>
         </ErrorProvider>

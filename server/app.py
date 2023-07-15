@@ -23,7 +23,7 @@ from models import User, Review, Artwork, UserArtwork
 
 #OpenAI Request
 @app.route('/create')
-def create():
+def createImageFromPrompt():
     image = openai.Image.create(
         prompt="A cute baby turtle, ultra realistic, 4k high res, steampunk style",
         n=1,
