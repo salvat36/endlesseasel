@@ -28,6 +28,8 @@ def createImageFromPrompt():
         prompt="A cute baby turtle, ultra realistic, 4k high res, steampunk style",
         n=1,
         size="256x256"
+
+    new_image = 
 )
     return f'''
     <h1>EndlessEasel</h1>
