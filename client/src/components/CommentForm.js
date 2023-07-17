@@ -5,14 +5,22 @@ import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 
-const CommentForm = ( {handleAddReview, artwork_id} ) => {
-  const {setError, error} = useContext(ErrorContext)
-  const history = useHistory()
+const CommentForm = ({ handleAddReview, artwork_id }) => {
+  const { setError, error } = useContext(ErrorContext);
+  const history = useHistory();
   const updateSchema = yup.object().shape({
-    rating: yup.number().required("Rating is required").min(1).max(10),
-    description: yup.string().matches(/^[a-zA-Z\s.,!?;:'"-]+$/, 'Description can only contain letters').required("Description is required").min(5).max(100),
+      rating: yup
+      .number()
+      .required("Rating is required")
+      .min(1)
+      .max(10),
+    description: yup
+      .string()
+      .matches(/^[a-zA-Z\s.,!?;:'"-]+$/, "Description can only contain letters")
+      .required("Description is required")
+      .min(5)
+      .max(100),
   });
-
 
   const formik = useFormik({
     initialValues: {
@@ -26,12 +34,12 @@ const CommentForm = ( {handleAddReview, artwork_id} ) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({...values, artwork_id : artwork_id}),
+        body: JSON.stringify({ ...values, artwork_id: artwork_id }),
       }).then((res) => {
         if (res.ok) {
           res.json().then((res) => {
             handleAddReview(res);
-            resetForm({valies: ''});
+            resetForm({ valies: "" });
           });
         } else {
           res.json().then((error) => setError([error.error]));
@@ -41,7 +49,7 @@ const CommentForm = ( {handleAddReview, artwork_id} ) => {
   });
   return (
     <div>
-      <h1>Add a comment</h1>
+      <h1>Leave a comment for the artist!</h1>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Rating: </label>
@@ -57,14 +65,14 @@ const CommentForm = ( {handleAddReview, artwork_id} ) => {
           <div>{formik.errors.rating}</div>
         </>
         <>
-          <label>Description: </label>
+          <label>Comment: </label>
           <input
             type="description"
             name="description"
             value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Review Description"
+            placeholder="Comment"
           />
           {formik.errors.description && formik.touched.description}{" "}
           <div>{formik.errors.description}</div>
