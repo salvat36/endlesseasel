@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
+import Typography from "@mui/material/Typography";
 
 const PromptForm = ({ handleAddPrompt, user_id }) => {
   const [imageURL, setImageURL] = useState("");
@@ -100,8 +101,11 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             onBlur={formik.handleBlur}
             placeholder="Enter Desired Style"
           />
-          {formik.errors.genre && formik.touched.genre}{" "}
-          <div>{formik.errors.genre}</div>
+          {formik.errors.genre && formik.touched.genre && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.genre}
+            </Typography>
+          )}
         </>
         <>
           <label>Price: </label>
@@ -113,8 +117,11 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             onBlur={formik.handleBlur}
             placeholder="Enter Desired Price"
           />
-          {formik.errors.price && formik.touched.price}{" "}
-          <div>{formik.errors.price}</div>
+          {formik.errors.price && formik.touched.price && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.price}
+            </Typography>
+          )}
         </>
         <>
           <label>Title: </label>
@@ -126,8 +133,11 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             onBlur={formik.handleBlur}
             placeholder="Enter Desired Title"
           />
-          {formik.errors.title && formik.touched.title}{" "}
-          <div>{formik.errors.title}</div>
+          {formik.errors.title && formik.touched.title && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.title}
+            </Typography>
+          )}
         </>
         <>
           <label>Art Description </label>
@@ -142,8 +152,11 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             cols={50}
             style={{ resize: "vertical" }}
           />
-          {formik.errors.prompt && formik.touched.prompt}{" "}
-          <div>{formik.errors.prompt}</div>
+          {formik.errors.prompt && formik.touched.prompt && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.prompt}
+            </Typography>
+          )}
         </>
         <button type="submit">Create Your Masterpiece!</button>
         <div>
