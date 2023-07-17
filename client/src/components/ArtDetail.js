@@ -4,6 +4,7 @@ import CommentForm from "./CommentForm";
 import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
+import Comment from "./Comment";
 
 const ArtDetail = () => {
   const [artwork, setArtwork] = useState([]);
@@ -36,14 +37,7 @@ const ArtDetail = () => {
     updateUser({ ...user, artworks: [...user.artworks, artwork] });
   };
 
-  // ! REFACTOR TO REVIEWS COMPONENT?
-  const mappedReviews = reviews?.map((review) => (
-    <ul>
-      <li>Customer Rating: {review.rating}/10</li>
-      <li>Customer Review: {review.description}</li>
-    </ul>
-  ));
-  // !!!!!!!!!!!!!!!!!!!!
+  const mappedReviews = reviews?.map((review) => <Comment review={review} />);
 
   const handleAddArtwork = () => {
     fetch("/user-artworks", {
