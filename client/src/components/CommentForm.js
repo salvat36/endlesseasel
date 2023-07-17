@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
-import Error from "./Error";
+import Typography from "@mui/material/Typography";
 
 const CommentForm = ({ handleAddReview, artwork_id }) => {
   const { setError, error } = useContext(ErrorContext);
@@ -61,8 +61,11 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
             onBlur={formik.handleBlur}
             placeholder="Rate 1/10"
           />
-          {formik.errors.rating && formik.touched.rating}{" "}
-          <div>{formik.errors.rating}</div>
+          {formik.errors.rating && formik.touched.rating && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.rating}
+            </Typography>
+          )}
         </>
         <>
           <label>Comment: </label>
@@ -74,8 +77,11 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
             onBlur={formik.handleBlur}
             placeholder="Comment"
           />
-          {formik.errors.description && formik.touched.description}{" "}
-          <div>{formik.errors.description}</div>
+          {formik.errors.description && formik.touched.description && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.description}
+            </Typography>
+          )}
         </>
         <button type="submit">Add a Review</button>
       </form>
