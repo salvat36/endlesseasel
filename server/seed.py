@@ -117,7 +117,7 @@ if __name__ == '__main__':
         db.session.add_all(reviews)
         db.session.commit()
 
-        print('and Walla!')
+        print('and voilà!')
         user_artworks = create_user_artworks(users, artworks)
         db.session.add_all(user_artworks)
         db.session.commit()

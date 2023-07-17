@@ -11,9 +11,9 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
   const history = useHistory();
   const createSchema = yup.object().shape({
     genre: yup.string().required("Genre is required").min(1).max(10),
-    price: yup.number().required("Price is required").min(5).max(100),
-    title: yup.string().required("Title is Required"),
-    prompt: yup.string().required("Image Prompt Required"),
+    price: yup.number().positive('Price must be a positive number').required("Price is required").min(5).max(100),
+    title: yup.string().required("Title is Required").min(1).max(30),
+    prompt: yup.string().required("Image Prompt Required").min(5).max(100),
   });
 
   const formik = useFormik({
@@ -31,14 +31,13 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          //   body: JSON.stringify({...values, user_id : user_id}),
           body: JSON.stringify({ prompt: values.prompt }),
         });
 
         if (createImageResponse.ok) {
           const imageResponseData = await createImageResponse.json();
           const imageURL = imageResponseData.image_url;
-          setImageURL(imageURL)
+          setImageURL(imageURL);
 
           const createArtworkResponse = await fetch("/artworks", {
             method: "POST",
@@ -71,14 +70,14 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
       <h1>Generate an Image!</h1>
       <form onSubmit={formik.handleSubmit}>
         <>
-          <label>Genre: </label>
+          <label>Style: </label>
           <input
             type="text"
             name="genre"
             value={formik.values.genre}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Genre"
+            placeholder="Style"
           />
           {formik.errors.genre && formik.touched.genre}{" "}
           <div>{formik.errors.genre}</div>
@@ -110,28 +109,33 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
           <div>{formik.errors.title}</div>
         </>
         <>
-          <label>Image Prompt: </label>
-          <input
+          <label>Art Description </label>
+          <textarea
             type="text"
             name="prompt"
             value={formik.values.prompt}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="prompt"
+            placeholder="Whatever your heart desires!"
+            rows={5}
+            cols={50}
+            style={{resize : 'vertical'}}
+
           />
           {formik.errors.prompt && formik.touched.prompt}{" "}
           <div>{formik.errors.prompt}</div>
         </>
-        <button type="submit">Generate a New Image</button>
+        <button type="submit">Create Your Masterpiece!</button>
         <div>
+      {/*!!!!!!!!!!!!! - implement loading component styling here - !!!!!!!!!!!!! */}
           {imageURL && (
             <>
-              <h2>Generated Image:</h2>
-              <img src={imageURL} alt="prompt input here" />
+              <h2>and voilà!:</h2>
+              <img src={imageURL} alt="ALT" />
             </>
           )}
         </div>
-        {error? <Error/> : <></>}
+        {error ? <Error /> : <></>}
       </form>
     </div>
   );
