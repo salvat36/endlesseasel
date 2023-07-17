@@ -49,7 +49,7 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
   });
   return (
     <div>
-      <h1>Leave a comment for the artist!</h1>
+      <h1>Share your critique with the artist!</h1>
       <form onSubmit={formik.handleSubmit}>
         <>
           <label>Rating: </label>
