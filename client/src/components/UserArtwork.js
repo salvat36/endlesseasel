@@ -53,7 +53,7 @@ const UserArtwork = () => {
       <div>User Profile for {user?.username} </div>
       <button onClick={handleDeleteUser}>Delete Profile</button>
       <button onClick={toggleForm}>Edit Profile</button>
-      {showForm ? <UpdateUserForm /> : null}
+      {showForm ? <UpdateUserForm toggleForm={toggleForm}/> : null}
       <div>{userArtworksList}</div>
     </>
   );

@@ -6,7 +6,7 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 
-const UpdateUserForm = () => {
+const UpdateUserForm = ( {toggleForm}) => {
   const history = useHistory();
   const {user, updateUser} = useContext(UserContext)
   const {error, setError} = useContext(ErrorContext)
@@ -38,6 +38,7 @@ const UpdateUserForm = () => {
             updateUser(res);
             resetForm();
             history.push("/user-artworks");
+            toggleForm();
           });
         } else {
           res.json().then((error) => setError([error.error]));
