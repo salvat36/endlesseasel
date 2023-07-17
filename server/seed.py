@@ -16,7 +16,7 @@ def create_users():
     for _ in range(50):
         user = User(
             username = fake.name(),
-            password_hash = 'password',
+            password_hash = 'Password1!',
             email = fake.email(),
             cart = fake.word(),
             created_at = fake.date_time(),
