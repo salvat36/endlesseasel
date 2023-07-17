@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
+import Typography from "@mui/material/Typography";
 
 const UpdateUserForm = ( {toggleForm}) => {
   const history = useHistory();
@@ -68,8 +69,11 @@ const UpdateUserForm = ( {toggleForm}) => {
             onBlur={formik.handleBlur}
             placeholder="New Username"
           />
-          {formik.errors.username && formik.touched.username}{" "}
-          <div>{formik.errors.username}</div>
+          {formik.errors.username && formik.touched.username && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.username}
+            </Typography>
+          )}
         </>
         <>
           <label>Password: </label>
@@ -81,8 +85,11 @@ const UpdateUserForm = ( {toggleForm}) => {
             onBlur={formik.handleBlur}
             placeholder="New Password"
           />
-          {formik.errors.password && formik.touched.password}{" "}
-          <div>{formik.errors.password}</div>
+          {formik.errors.password && formik.touched.password && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.password}
+            </Typography>
+          )}
         </>
         <>
           <label>Email: </label>
@@ -94,8 +101,11 @@ const UpdateUserForm = ( {toggleForm}) => {
             onBlur={formik.handleBlur}
             placeholder="New Email"
           />
-          {formik.errors.email && formik.touched.email}{" "}
-          <div>{formik.errors.email}</div>
+          {formik.errors.email && formik.touched.email && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.email}
+            </Typography>
+          )}
         </>
         <button type="submit">Update Profile</button>
       </form>
