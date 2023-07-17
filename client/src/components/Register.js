@@ -9,12 +9,19 @@ import Error from "./Error";
 const Register = () => {
   const history = useHistory();
   const { handleRegister, handleLogin, isLoggedIn } = useContext(UserContext);
-  const { error } = useContext(ErrorContext)
+  const { error } = useContext(ErrorContext);
   const { user } = useContext(UserContext);
-
+  const pwRegEx =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const registerSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(5).max(30),
-    password: yup.string().required("Password is required").min(8).max(100),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        pwRegEx,
+        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
+      ),
     email: yup.string().required("Email is required").email().min(5).max(30),
   });
 
@@ -41,7 +48,6 @@ const Register = () => {
     return null;
   }
   return (
-
     <div>
       <h1> Please Login or Signup!</h1>
       <h2>{isLoggedIn ? "Already a User?" : "Not a User?"}</h2>
@@ -93,7 +99,7 @@ const Register = () => {
           {isLoggedIn ? "Create" : "Login"}{" "}
         </button>
       </span>
-      {error? <Error/> : <></>}
+      {error ? <Error /> : <></>}
     </div>
   );
 };
