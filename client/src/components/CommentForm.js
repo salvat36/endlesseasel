@@ -16,7 +16,7 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
       .max(10),
     description: yup
       .string()
-      .matches(/^[a-zA-Z\s.,!?;:'"-]+$/, "Description can only contain letters")
+      .matches(/^[a-zA-Z\s.,!?;:'"-]+$/, "Description can only contain spaces, letters or punctuation!?")
       .required("Description is required")
       .min(5)
       .max(100),

@@ -10,10 +10,31 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
   const { setError, error } = useContext(ErrorContext);
   const history = useHistory();
   const createSchema = yup.object().shape({
-    genre: yup.string().required("Genre is required").min(1).max(10),
-    price: yup.number().positive('Price must be a positive number').required("Price is required").min(5).max(100),
-    title: yup.string().required("Title is Required").min(1).max(30),
-    prompt: yup.string().required("Image Prompt Required").min(5).max(100),
+    genre: yup
+      .string()
+      .required("Genre is required")
+      .min(1)
+      .max(10),
+    price: yup
+      .number()
+      .positive("Price must be a positive number")
+      .required("Price is required")
+      .min(5)
+      .max(100),
+    title: yup
+      .string()
+      .required("Title is Required")
+      .min(1)
+      .max(30),
+    prompt: yup
+      .string()
+      .matches(
+        /^[a-zA-Z\s.,!?;:'"-]+$/,
+        "Description can only contain spaces, letters or punctuation!?"
+      )
+      .required("Image Prompt Required")
+      .min(5)
+      .max(100),
   });
 
   const formik = useFormik({
@@ -77,7 +98,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             value={formik.values.genre}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Style"
+            placeholder="Enter Desired Style"
           />
           {formik.errors.genre && formik.touched.genre}{" "}
           <div>{formik.errors.genre}</div>
@@ -90,7 +111,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             value={formik.values.price}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="price"
+            placeholder="Enter Desired Price"
           />
           {formik.errors.price && formik.touched.price}{" "}
           <div>{formik.errors.price}</div>
@@ -103,7 +124,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             value={formik.values.title}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="title"
+            placeholder="Enter Desired Title"
           />
           {formik.errors.title && formik.touched.title}{" "}
           <div>{formik.errors.title}</div>
@@ -119,15 +140,14 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             placeholder="Whatever your heart desires!"
             rows={5}
             cols={50}
-            style={{resize : 'vertical'}}
-
+            style={{ resize: "vertical" }}
           />
           {formik.errors.prompt && formik.touched.prompt}{" "}
           <div>{formik.errors.prompt}</div>
         </>
         <button type="submit">Create Your Masterpiece!</button>
         <div>
-      {/*!!!!!!!!!!!!! - implement loading component styling here - !!!!!!!!!!!!! */}
+          {/*!!!!!!!!!!!!! - implement loading component styling here - !!!!!!!!!!!!! */}
           {imageURL && (
             <>
               <h2>and voilà!:</h2>
