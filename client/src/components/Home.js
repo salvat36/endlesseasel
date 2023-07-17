@@ -7,7 +7,7 @@ const Home = () => {
       <h1>EndlessEasel</h1>
       <img
         src="https://images.nightcafe.studio/jobs/YbfjF0xAPTQHTkbeCSCU/YbfjF0xAPTQHTkbeCSCU--1--1iy5g.jpg?tr=w-828,c-at_max"
-        alt="not found"
+        alt="How to Video: for navigating site features"
       />
     </div>
   );
