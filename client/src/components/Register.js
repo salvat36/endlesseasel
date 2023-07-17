@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
+import Typography from "@mui/material/Typography";
 
 const Register = () => {
   const history = useHistory();
@@ -74,8 +75,11 @@ const Register = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.username && formik.touched.username}{" "}
-          <div>{formik.errors.username}</div>
+          {formik.errors.username && formik.touched.username && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.username}
+            </Typography>
+          )}
         </>
         <>
           <label>Password: </label>
@@ -86,8 +90,11 @@ const Register = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.errors.password && formik.touched.password}{" "}
-          <div>{formik.errors.password}</div>
+          {formik.errors.password && formik.touched.password && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.password}
+            </Typography>
+          )}
         </>
         {!isLoggedIn ? (
           <>
@@ -99,8 +106,11 @@ const Register = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-            {formik.errors.email && formik.touched.email}{" "}
-            <div>{formik.errors.email}</div>
+          {formik.errors.email && formik.touched.email && (
+            <Typography variant='body2' color='error'>
+              {formik.errors.email}
+            </Typography>
+          )}
           </>
         ) : null}
         <input type="submit" value={isLoggedIn ? "Login" : "Create"} />{" "}
