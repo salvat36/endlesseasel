@@ -27,9 +27,10 @@ function App() {
 
   return (
     <main>
-      <Switch>
         <Navigation />
         <Register />
+        <div>
+      <Switch>
         <Route exact path="/">
           <Home />
         </Route>
@@ -49,6 +50,7 @@ function App() {
           <Create updateArtworks={updateArtworks} />
         </Route>
       </Switch>
+      </div>
     </main>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
@@ -72,6 +72,11 @@ const ArtDetail = () => {
       <img src={image} alt={title} />
       {error ? <Error /> : <></>}
       <button onClick={handleAddArtwork}>Add to Collection</button>
+      <div>
+        <Link to="/shop">
+          <button>Back to Exploring</button>
+        </Link>
+      </div>
       <CommentForm
         reviews={reviews}
         handleAddReview={handleAddReview}
