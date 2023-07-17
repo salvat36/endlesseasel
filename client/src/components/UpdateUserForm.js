@@ -10,10 +10,18 @@ const UpdateUserForm = ( {toggleForm}) => {
   const history = useHistory();
   const {user, updateUser} = useContext(UserContext)
   const {error, setError} = useContext(ErrorContext)
+  const pwRegEx =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const updateSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(8).max(30),
 
-    password: yup.string().required("Password is required").min(8).max(100),
+    password: yup.string()
+    .required("Password is required")
+    .matches(
+      pwRegEx,
+      "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
+    )
+    .min(8).max(100),
 
     email: yup.string().required("Email is required").email().min(5).max(30),
   });

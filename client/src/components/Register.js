@@ -14,20 +14,33 @@ const Register = () => {
   const pwRegEx =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const registerSchema = yup.object().shape({
-    username: yup.string().required("Username is required").min(5).max(30),
+    username: yup
+      .string()
+      .required("Username is required")
+      .min(5).max(30),
     password: yup
       .string()
       .required("Password is required")
       .matches(
         pwRegEx,
-        "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character."
+        "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
       ),
-    email: yup.string().required("Email is required").email().min(5).max(30),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email()
+      .min(5).max(30),
   });
 
   const signInSchema = yup.object().shape({
-    username: yup.string().required("Username is required").min(5).max(30),
-    password: yup.string().required("Password is required").min(8).max(100),
+    username: yup
+      .string()
+      .required("Username is required")
+      .min(5).max(30),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8).max(100),
   });
 
   const formik = useFormik({
