@@ -150,8 +150,8 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
           {/*!!!!!!!!!!!!! - implement loading component styling here - !!!!!!!!!!!!! */}
           {imageURL && (
             <>
-              <h2>and voilà!:</h2>
-              <img src={imageURL} alt="ALT" />
+              <h2>and voilà!</h2>
+              <img src={imageURL} alt={`${formik.values.title} ${formik.values.genre}`}/>
             </>
           )}
         </div>
