@@ -68,7 +68,7 @@ const ArtDetail = () => {
       <Button variant="contained" color="neutral" onClick={handleAddArtwork}>Add to Collection</Button>
       <div>
         <Link to="/shop">
-          <Button variant="contained" color="neutral" >Back to Exploring</Button>
+          <Button variant="contained" color="secondary" >Back to Exploring</Button>
         </Link>
       </div>
       <CommentForm

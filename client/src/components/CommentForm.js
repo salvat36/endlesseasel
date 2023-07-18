@@ -4,6 +4,7 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 
 const CommentForm = ({ handleAddReview, artwork_id }) => {
   const { setError, error } = useContext(ErrorContext);
@@ -83,7 +84,7 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
             </Typography>
           )}
         </>
-        <button type="submit">Add a Review</button>
+        <Button variant="contained" color="neutral"  type="submit">Add a Review</Button>
       </form>
     </div>
   );

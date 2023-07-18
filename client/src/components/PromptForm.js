@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 
 const PromptForm = ({ handleAddPrompt, user_id }) => {
   const [imageURL, setImageURL] = useState("");
@@ -158,7 +159,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             </Typography>
           )}
         </>
-        <button type="submit">Create Your Masterpiece!</button>
+        <Button variant="contained" color="neutral" type="submit">Create Your Masterpiece!</Button>
         <div>
           {/*!!!!!!!!!!!!! - implement loading component styling here - !!!!!!!!!!!!! */}
           {imageURL && (
