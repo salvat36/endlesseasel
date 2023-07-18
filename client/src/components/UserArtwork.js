@@ -50,7 +50,7 @@ const UserArtwork = () => {
   const userArtworksList = user?.artworks.map((artwork) => (
 
     <React.Fragment key={artwork.id}>
-     <Grid item xs={12} md={6} lg={4}>
+     <Grid item >
       <Card>
         <CardMedia
                   component="img"
