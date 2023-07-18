@@ -6,24 +6,26 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import { Box, Button, Container, TextField } from "@mui/material";
 
-const UpdateUserForm = ( {toggleForm}) => {
+const UpdateUserForm = ({ toggleForm }) => {
   const history = useHistory();
-  const {user, updateUser} = useContext(UserContext)
-  const {error, setError} = useContext(ErrorContext)
+  const { user, updateUser } = useContext(UserContext);
+  const { error, setError } = useContext(ErrorContext);
   const pwRegEx =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const updateSchema = yup.object().shape({
     username: yup.string().required("Username is required").min(8).max(30),
 
-    password: yup.string()
-    .required("Password is required")
-    .matches(
-      pwRegEx,
-      "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
-    )
-    .min(8).max(100),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(
+        pwRegEx,
+        "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
+      )
+      .min(8)
+      .max(100),
 
     email: yup.string().required("Email is required").email().min(5).max(30),
   });
@@ -31,7 +33,7 @@ const UpdateUserForm = ( {toggleForm}) => {
   const formik = useFormik({
     initialValues: {
       username: user.username,
-      password: '',
+      password: "",
       email: user.email,
     },
     validationSchema: updateSchema,
@@ -57,61 +59,63 @@ const UpdateUserForm = ( {toggleForm}) => {
     },
   });
   return (
-    <div>
-      <h1>Edit Profile</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <>
-          <label>Username: </label>
-          <input
-            type="text"
+    <Container>
+      <Box mt={5} display="flex" flexDirection="column" alignItems="center">
+        <Typography variant="h4" gutterBottom>
+          Update Your Profile
+        </Typography>
+        <Box width="100%">
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="username"
             value={formik.values.username}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="New Username"
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
           />
-          {formik.errors.username && formik.touched.username && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.username}
-            </Typography>
-          )}
-        </>
-        <>
-          <label>Password: </label>
-          <input
-            type="password"
+          <TextField
+            label="Password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="password"
+            type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="New Password"
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
           />
-          {formik.errors.password && formik.touched.password && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.password}
-            </Typography>
-          )}
-        </>
-        <>
-          <label>Email: </label>
-          <input
-            type="email"
+
+          <TextField
+            label="email"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="email"
+            type="email"
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="New Email"
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
           />
-          {formik.errors.email && formik.touched.email && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.email}
-            </Typography>
-          )}
-        </>
-        <Button variant="contained" color="neutral" type="submit"> Update Profile </Button>
-      </form>
-      {error? <Error/> : <></>}
-    </div>
+        </Box>
+        <Button
+          onClick={formik.handleSubmit}
+          variant="contained"
+          color="neutral"
+          sx={{ mt: 2 }}
+        >
+          Update Profile
+        </Button>
+      </Box>
+      {error ? <Error /> : <></>}
+    </Container>
   );
 };
 

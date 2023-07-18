@@ -6,7 +6,7 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Typography from "@mui/material/Typography";
-import { Box, Button, Container, FormControlLabel, Switch, TextField, ToggleButton } from "@mui/material";
+import { Box, Button, Container, FormControlLabel, Switch, TextField} from "@mui/material";
 
 const Register = () => {
   const history = useHistory();
