@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Comment from "./Comment";
+import { Button } from "@mui/material";
 
 const ArtDetail = () => {
   const [artwork, setArtwork] = useState([]);
@@ -64,10 +65,10 @@ const ArtDetail = () => {
       <h2>Price: ${price}</h2>
       <img src={image} alt={title} />
       {error ? <Error /> : <></>}
-      <button onClick={handleAddArtwork}>Add to Collection</button>
+      <Button variant="contained" color="neutral" onClick={handleAddArtwork}>Add to Collection</Button>
       <div>
         <Link to="/shop">
-          <button>Back to Exploring</button>
+          <Button variant="contained" color="neutral" >Back to Exploring</Button>
         </Link>
       </div>
       <CommentForm

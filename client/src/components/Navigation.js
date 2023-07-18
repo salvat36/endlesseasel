@@ -119,7 +119,7 @@ const Navigation = () => {
                   padding: "8px 16px",
                   margin: "0 4px",
                   borderRadius: "4px",
-                  backgroundColor: "#9c27b0",
+                  backgroundColor: "#B3261E",
                 }}
               >
                 Logout

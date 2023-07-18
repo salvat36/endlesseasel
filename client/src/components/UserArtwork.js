@@ -90,7 +90,7 @@ const UserArtwork = () => {
       <Grid item>
         <Button
           variant="contained"
-          color="secondary"
+          color="error"
           onClick={handleDeleteUser}
         >
           Delete Profile
