@@ -237,6 +237,7 @@ class UserArtworkById(Resource):
             return make_response(user_artwork.to_dict(), 200)
         return make_response({"error": "UserArtwork not found"}, 404)
 
+
     def delete(self, id):
         if "user_id" not in session:
             return make_response({"error": "Unauthorized"}, 401)
