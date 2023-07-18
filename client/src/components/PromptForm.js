@@ -5,34 +5,26 @@ import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import { Button, Container, Box, TextField } from "@mui/material";
 
 const PromptForm = ({ handleAddPrompt, user_id }) => {
   const [imageURL, setImageURL] = useState("");
   const { setError, error } = useContext(ErrorContext);
   const history = useHistory();
   const createSchema = yup.object().shape({
-    genre: yup
-      .string()
-      .required("Genre is required")
-      .min(1)
-      .max(10),
+    genre: yup.string().required("Genre is required").min(1).max(10),
     price: yup
       .number()
       .positive("Price must be a positive number")
       .required("Price is required")
       .min(5)
       .max(100),
-    title: yup
-      .string()
-      .required("Title is Required")
-      .min(1)
-      .max(30),
+    title: yup.string().required("Title is Required").min(1).max(30),
     prompt: yup
       .string()
       .matches(
         /^[a-zA-Z\s.,!?;:'"-]+$/,
-        "Description can only contain spaces, letters or punctuation!?"
+        "Prompt can only contain spaces, letters or punctuation!?"
       )
       .required("Image Prompt Required")
       .min(5)
@@ -44,7 +36,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
       genre: "",
       price: "",
       title: "",
-      image: "",
+      prompt: "",
     },
     validationSchema: createSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -89,89 +81,88 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
   });
 
   return (
-    <div>
-      <h1>Generate an Image!</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <>
-          <label>Style: </label>
-          <input
-            type="text"
+    <Container>
+      <Box
+        mt={5}
+        component="form"
+        onSubmit={formik.handleSubmit}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        <Typography variant="h4" gutterBottom>
+          Generate an Image!
+        </Typography>
+        <Box>
+          <TextField
+            label="genre"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="genre"
             value={formik.values.genre}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Enter Desired Style"
+            error={formik.touched.genre && Boolean(formik.errors.genre)}
+            helperText={formik.touched.genre && formik.errors.genre}
           />
-          {formik.errors.genre && formik.touched.genre && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.genre}
-            </Typography>
-          )}
-        </>
-        <>
-          <label>Price: </label>
-          <input
-            type="price"
+
+          <TextField
+            label="price"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="price"
             value={formik.values.price}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Enter Desired Price"
+            error={formik.touched.price && Boolean(formik.errors.price)}
+            helperText={formik.touched.price && formik.errors.price}
           />
-          {formik.errors.price && formik.touched.price && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.price}
-            </Typography>
-          )}
-        </>
-        <>
-          <label>Title: </label>
-          <input
-            type="text"
+          <TextField
+            label="title"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="title"
             value={formik.values.title}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Enter Desired Title"
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
           />
-          {formik.errors.title && formik.touched.title && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.title}
-            </Typography>
-          )}
-        </>
-        <>
-          <label>Art Description </label>
-          <textarea
-            type="text"
+          <TextField
+            label="Prompt"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="prompt"
             value={formik.values.prompt}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Whatever your heart desires!"
-            rows={5}
-            cols={50}
-            style={{ resize: "vertical" }}
+            error={
+              formik.touched.prompt && Boolean(formik.errors.prompt)
+            }
+            helperText={formik.touched.prompt && formik.errors.prompt}
           />
-          {formik.errors.prompt && formik.touched.prompt && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.prompt}
-            </Typography>
-          )}
-        </>
-        <Button variant="contained" color="neutral" type="submit">Create Your Masterpiece!</Button>
-        <div>
-          {/*!!!!!!!!!!!!! - implement loading component styling here - !!!!!!!!!!!!! */}
-          {imageURL && (
-            <>
-              <h2>and voilà!</h2>
-              <img src={imageURL} alt={`${formik.values.title} ${formik.values.genre}`}/>
-            </>
-          )}
-        </div>
-        {error ? <Error /> : <></>}
-      </form>
-    </div>
+          <Button type="submit" variant="contained" color="neutral">
+            Create Your Masterpiece!
+          </Button>
+          <Box>
+            {imageURL && (
+              <Box>
+                <Typography variant="h2">and voilà!</Typography>
+                <img
+                  src={imageURL}
+                  alt={`${formik.values.title} ${formik.values.genre}`}
+                />
+              </Box>
+            )}
+          </Box>
+          {error ? <Error /> : <></>}
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

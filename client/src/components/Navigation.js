@@ -110,7 +110,7 @@ const Navigation = () => {
           </Link>
 
           {user && (
-            <Link>
+            <Link to='/logout'>
               <Button
                 onClick={handleLogoutClick}
                 sx={{

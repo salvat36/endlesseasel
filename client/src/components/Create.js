@@ -7,12 +7,10 @@ const Create = ({ updateArtworks }) => {
     updateArtworks((artworks) => [newPromptArtwork, ...artworks]);
   };
   return (
-    <Container>
       <Box>
         <Typography variant="h1"> Create </Typography>
         <PromptForm handleAddPrompt={handleAddPrompt} />
       </Box>
-    </Container>
   );
 };
 
