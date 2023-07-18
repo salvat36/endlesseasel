@@ -5,7 +5,7 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Comment from "./Comment";
-import { Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 const ArtDetail = () => {
   const [artwork, setArtwork] = useState([]);
@@ -58,26 +58,30 @@ const ArtDetail = () => {
   };
 
   return (
-    <div>
-      <h1>Art Detail</h1>
-      <h2>Title: {title}</h2>
-      <h2>Style: {genre}</h2>
-      <h2>Price: ${price}</h2>
-      <img src={image} alt={title} />
+    <Box sx={{ p: 2}}>
+      <Typography variant="h1"> Art Detail </Typography>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography variant="h2">Title: {title}</Typography>
+          <Typography variant="h2">Style: {genre}</Typography>
+          <Typography variant="h2">Price: ${price}</Typography>
+        </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+          <img src={image} alt={title} style={{ maxWidth: '100%', maxHeight: '400px' }} />
+          </Box>
       {error ? <Error /> : <></>}
       <Button variant="contained" color="neutral" onClick={handleAddArtwork}>Add to Collection</Button>
-      <div>
+      <Box sx={{ mt: 2}}>
         <Link to="/shop">
           <Button variant="contained" color="secondary" >Back to Exploring</Button>
         </Link>
-      </div>
+      </Box>
       <CommentForm
         reviews={reviews}
         handleAddReview={handleAddReview}
         artwork_id={artwork.id}
       />
       <ul>{mappedReviews}</ul>
-    </div>
+    </Box>
   );
 };
 
