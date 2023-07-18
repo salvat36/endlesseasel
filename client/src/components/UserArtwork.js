@@ -1,12 +1,20 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import UpdateUserForm from "./UpdateUserForm";
 import { UserContext } from "../context/UserProvider";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Grid,
+  Typography,
+  Button,
+} from "@mui/material";
 
 const UserArtwork = () => {
   const history = useHistory();
   const [showForm, setShowForm] = useState(false);
-  const {updateUser, user} = useContext(UserContext)
+  const { updateUser, user } = useContext(UserContext);
 
   const toggleForm = () => {
     setShowForm((showForm) => !showForm);
@@ -33,29 +41,72 @@ const UserArtwork = () => {
   };
 
   const updateUserArtwork = (id) => {
-    updateUser(
-      {...user, artworks: user.artworks.filter(artwork => (id !== artwork.id))}
-  )
-  }
+    updateUser({
+      ...user,
+      artworks: user.artworks.filter((artwork) => id !== artwork.id),
+    });
+  };
 
   const userArtworksList = user?.artworks.map((artwork) => (
-    <>
-      <div key={artwork.id}> {artwork.title}</div>
-      <img src={artwork.image} alt={artwork.title} />
-      <button onClick={() => handleDeleteUserArtwork(artwork.id)}>
-        Remove
-      </button>
-    </>
+
+    <React.Fragment key={artwork.id}>
+     <Grid item xs={12} md={6} lg={4}>
+      <Card>
+        <CardMedia
+                  component="img"
+                  height="200"
+                  image={artwork.image}
+                  alt={artwork.title}
+                />
+             <CardContent>
+                  <Typography variant="h6">{artwork.title}</Typography>
+                </CardContent>
+                <Button variant="contained" color="secondary" onClick={() => handleDeleteUserArtwork(artwork.id)}>
+                  Remove
+                </Button>
+              </Card>
+            </Grid>
+    </React.Fragment>
   ));
 
   return (
-    <>
-      <div>User Profile for {user?.username} </div>
-      <button onClick={handleDeleteUser}>Delete Profile</button>
-      <button onClick={toggleForm}>Edit Profile</button>
-      {showForm ? <UpdateUserForm toggleForm={toggleForm}/> : null}
-      <div>{userArtworksList}</div>
-    </>
+    <Grid container direction="column" alignItems="center" spacing={2}>
+      <Grid item>
+        <Typography variant="h4">Your Profile</Typography>
+      </Grid>
+      <Grid item>
+        <Card>
+          <CardMedia
+            component="img"
+            height="400"
+            image="https://images.nightcafe.studio/jobs/Qd58l3AQcSAYorblAGI0/Qd58l3AQcSAYorblAGI0--1--0qpm8.jpg?tr=w-1600,c-at_max"
+            alt="Super sharp and crisp portrayal of a user profile"
+          />
+          <CardContent>
+            <Typography variant="h6">Username: {user?.username} </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleDeleteUser}
+        >
+          Delete Profile
+        </Button>
+        <Button variant="contained" color="primary" onClick={toggleForm}>
+          Edit Profile
+        </Button>
+        {showForm ? <UpdateUserForm toggleForm={toggleForm} /> : null}
+      </Grid>
+      <Grid item>
+        <Typography variant="h2">Private Collection</Typography>
+      </Grid>
+      <Grid item>
+        {userArtworksList}
+      </Grid>
+    </Grid>
   );
 };
 

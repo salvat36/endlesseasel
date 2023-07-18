@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
@@ -9,7 +9,6 @@ import Comment from "./Comment";
 const ArtDetail = () => {
   const [artwork, setArtwork] = useState([]);
   const [reviews, setReviews] = useState([]);
-  const history = useHistory();
   const { id } = useParams();
   const { genre, price, title, image } = artwork;
   const { updateUser, user } = useContext(UserContext);
