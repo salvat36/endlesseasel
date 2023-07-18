@@ -6,6 +6,7 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Typography from "@mui/material/Typography";
+import { Button, ToggleButton } from "@mui/material";
 
 const Register = () => {
   const history = useHistory();
@@ -15,10 +16,7 @@ const Register = () => {
   const pwRegEx =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const registerSchema = yup.object().shape({
-    username: yup
-      .string()
-      .required("Username is required")
-      .min(5).max(30),
+    username: yup.string().required("Username is required").min(5).max(30),
     password: yup
       .string()
       .required("Password is required")
@@ -26,22 +24,12 @@ const Register = () => {
         pwRegEx,
         "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character."
       ),
-    email: yup
-      .string()
-      .required("Email is required")
-      .email()
-      .min(5).max(30),
+    email: yup.string().required("Email is required").email().min(5).max(30),
   });
 
   const signInSchema = yup.object().shape({
-    username: yup
-      .string()
-      .required("Username is required")
-      .min(5).max(30),
-    password: yup
-      .string()
-      .required("Password is required")
-      .min(8).max(100),
+    username: yup.string().required("Username is required").min(5).max(30),
+    password: yup.string().required("Password is required").min(8).max(100),
   });
 
   const formik = useFormik({
@@ -76,7 +64,7 @@ const Register = () => {
             onBlur={formik.handleBlur}
           />
           {formik.errors.username && formik.touched.username && (
-            <Typography variant='body2' color='error'>
+            <Typography variant="body2" color="error">
               {formik.errors.username}
             </Typography>
           )}
@@ -91,7 +79,7 @@ const Register = () => {
             onBlur={formik.handleBlur}
           />
           {formik.errors.password && formik.touched.password && (
-            <Typography variant='body2' color='error'>
+            <Typography variant="body2" color="error">
               {formik.errors.password}
             </Typography>
           )}
@@ -106,21 +94,24 @@ const Register = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-          {formik.errors.email && formik.touched.email && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.email}
-            </Typography>
-          )}
+            {formik.errors.email && formik.touched.email && (
+              <Typography variant="body2" color="error">
+                {formik.errors.email}
+              </Typography>
+            )}
           </>
         ) : null}
-        <input type="submit" value={isLoggedIn ? "Login" : "Create"} />{" "}
+        <Button variant="contained" color="neutral" type="submit">
+          {" "}
+          {isLoggedIn ? "Login" : "Create"}{" "}
+        </Button>
       </form>
       <span>
         {isLoggedIn ? "Need a new account?" : "Already have an account?"}
-        <button onClick={handleLogin}>
+        <ToggleButton variant="contained" onClick={handleLogin}>
           {" "}
           {isLoggedIn ? "Create" : "Login"}{" "}
-        </button>
+        </ToggleButton>
       </span>
       {error ? <Error /> : <></>}
     </div>

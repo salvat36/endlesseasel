@@ -6,6 +6,7 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
 
 const UpdateUserForm = ( {toggleForm}) => {
   const history = useHistory();
@@ -107,7 +108,7 @@ const UpdateUserForm = ( {toggleForm}) => {
             </Typography>
           )}
         </>
-        <button type="submit">Update Profile</button>
+        <Button variant="contained" color="neutral" type="submit"> Update Profile </Button>
       </form>
       {error? <Error/> : <></>}
     </div>
