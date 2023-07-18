@@ -11,7 +11,20 @@ const Navigation = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              alignItems: "center",
+              fontFamily: "oswald",
+              fontSize: "24px",
+              fontWeight: "bold",
+              letterSpacing: "2px",
+              color: "#f50057",
+            }}
+          >
             EndLessEasel
           </Typography>
 
