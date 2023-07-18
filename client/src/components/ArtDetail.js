@@ -54,7 +54,7 @@ const ArtDetail = () => {
   };
 
   const handleAddReview = (newReview) => {
-    setReviews((reviews) => [...reviews, newReview]);
+    setReviews((reviews) => [newReview, ...reviews]);
   };
 
   return (

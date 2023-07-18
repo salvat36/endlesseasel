@@ -8,7 +8,7 @@ const Navigation = () => {
   const { handleLogoutClick, user } = useContext(UserContext)
   return (
     <>
-      {user && <Link onClick={handleLogoutClick}>Logout</Link>}
+      {user && <Link onClick={handleLogoutClick}>Logout</Link>} 
       <Link to="/"> Home </Link>
       {user && <Link to="/shop"> Explore </Link>}
       {user && <Link to="/user-artworks"> Personal Portfolio </Link>}
