@@ -22,7 +22,7 @@ const Navigation = () => {
               fontSize: "24px",
               fontWeight: "bold",
               letterSpacing: "2px",
-              color: "#f50057",
+              color: "white",
             }}
           >
             EndLessEasel
@@ -36,7 +36,7 @@ const Navigation = () => {
                 padding: "8px 16px",
                 margin: "0 4px",
                 borderRadius: "4px",
-                backgroundColor: "#f50057",
+                backgroundColor: "#9c27b0",
               }}
             >
               Home
@@ -52,7 +52,7 @@ const Navigation = () => {
                   padding: "8px 16px",
                   margin: "0 4px",
                   borderRadius: "4px",
-                  backgroundColor: "#f50057",
+                  backgroundColor: "#9c27b0",
                 }}
               >
                 Explore
@@ -69,7 +69,7 @@ const Navigation = () => {
                   padding: "8px 16px",
                   margin: "0 4px",
                   borderRadius: "4px",
-                  backgroundColor: "#f50057",
+                  backgroundColor: "#9c27b0",
                 }}
               >
                 Portfolio
@@ -86,7 +86,7 @@ const Navigation = () => {
                   padding: "8px 16px",
                   margin: "0 4px",
                   borderRadius: "4px",
-                  backgroundColor: "#f50057",
+                  backgroundColor: "#9c27b0",
                 }}
               >
                 Create
@@ -102,10 +102,10 @@ const Navigation = () => {
                 padding: "8px 16px",
                 margin: "0 4px",
                 borderRadius: "4px",
-                backgroundColor: "#f50057",
+                backgroundColor: "#9c27b0",
               }}
             >
-              Home
+              Contact
             </Button>
           </Link>
 
@@ -119,7 +119,7 @@ const Navigation = () => {
                   padding: "8px 16px",
                   margin: "0 4px",
                   borderRadius: "4px",
-                  backgroundColor: "#f50057",
+                  backgroundColor: "#9c27b0",
                 }}
               >
                 Logout
