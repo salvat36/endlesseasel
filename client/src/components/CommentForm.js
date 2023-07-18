@@ -4,20 +4,19 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { ErrorContext } from "../context/ErrorProvider";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import { Box, Button, Container, TextField } from "@mui/material";
 
 const CommentForm = ({ handleAddReview, artwork_id }) => {
   const { setError, error } = useContext(ErrorContext);
   const history = useHistory();
   const updateSchema = yup.object().shape({
-      rating: yup
-      .number()
-      .required("Rating is required")
-      .min(1)
-      .max(10),
+    rating: yup.number().required("Rating is required").min(1).max(10),
     description: yup
       .string()
-      .matches(/^[a-zA-Z\s.,!?;:'"-]+$/, "Description can only contain spaces, letters or punctuation!?")
+      .matches(
+        /^[a-zA-Z\s.,!?;:'"-]+$/,
+        "Description can only contain spaces, letters or punctuation!?"
+      )
       .required("Description is required")
       .min(5)
       .max(100),
@@ -49,44 +48,50 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
     },
   });
   return (
-    <div>
-      <h1>Share your critique with the artist!</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <>
-          <label>Rating: </label>
-          <input
-            type="text"
+    <Container>
+      <Box mt={5} display="flex" flexDirection="column" alignItems="center">
+        <Typography variant="h4" gutterBottom>
+          {" "}
+          your critique for the artist!
+        </Typography>
+        <Box width="100%">
+          <TextField
+            label="Rating"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="rating"
             value={formik.values.rating}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Rate 1/10"
+            error={formik.touched.rating && Boolean(formik.errors.rating)}
+            helperText={formik.touched.rating && formik.errors.rating}
           />
-          {formik.errors.rating && formik.touched.rating && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.rating}
-            </Typography>
-          )}
-        </>
-        <>
-          <label>Comment: </label>
-          <input
-            type="description"
+          <TextField
+            label="Description"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="description"
             value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            placeholder="Comment"
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+            helperText={formik.touched.description && formik.errors.description}
           />
-          {formik.errors.description && formik.touched.description && (
-            <Typography variant='body2' color='error'>
-              {formik.errors.description}
-            </Typography>
-          )}
-        </>
-        <Button variant="contained" color="neutral"  type="submit">Add a Review</Button>
-      </form>
-    </div>
+          <Button
+            onClick={formik.handleSubmit}
+            variant="contained"
+            color="neutral"
+            sx={{ mt: 2 }}
+          >
+            Comment
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
