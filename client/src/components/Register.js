@@ -6,7 +6,7 @@ import { UserContext } from "../context/UserProvider";
 import { ErrorContext } from "../context/ErrorProvider";
 import Error from "./Error";
 import Typography from "@mui/material/Typography";
-import { Button, ToggleButton } from "@mui/material";
+import { Box, Button, Container, FormControlLabel, Switch, TextField, ToggleButton } from "@mui/material";
 
 const Register = () => {
   const history = useHistory();
@@ -50,71 +50,73 @@ const Register = () => {
     return null;
   }
   return (
-    <div>
-      <h1> Please Login or Signup!</h1>
-      <h2>{isLoggedIn ? "Already a User?" : "Not a User?"}</h2>
-      <form onSubmit={formik.handleSubmit}>
-        <>
-          <label>Username: </label>
-          <input
-            type="text"
+    <Container>
+      <Box mt={5} display="flex" flexDirection="column" alignItems="center">
+        <Typography variant="h4" gutterBottom>
+          Please Login or Signup!
+        </Typography>
+
+        <Typography variant="4" gutterBottom>
+          {isLoggedIn ? "Already a User?" : "Not a User?"}
+        </Typography>
+        <Box component="form" onSubmit={formik.handleSubmit} width="100%">
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="username"
             value={formik.values.username}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
           />
-          {formik.errors.username && formik.touched.username && (
-            <Typography variant="body2" color="error">
-              {formik.errors.username}
-            </Typography>
-          )}
-        </>
-        <>
-          <label>Password: </label>
-          <input
-            type="password"
+          <TextField
+            label="Password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
             name="password"
+            type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
           />
-          {formik.errors.password && formik.touched.password && (
-            <Typography variant="body2" color="error">
-              {formik.errors.password}
-            </Typography>
-          )}
-        </>
-        {!isLoggedIn ? (
-          <>
-            <label>Email: </label>
-            <input
-              type="email"
+
+          {!isLoggedIn && (
+            <TextField
+              label="Email"
+              variant="outlined"
+              fullWidth
+              margin="normal"
               name="email"
+              type="email"
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
             />
-            {formik.errors.email && formik.touched.email && (
-              <Typography variant="body2" color="error">
-                {formik.errors.email}
-              </Typography>
-            )}
-          </>
-        ) : null}
-        <Button variant="contained" color="neutral" type="submit">
-          {" "}
-          {isLoggedIn ? "Login" : "Create"}{" "}
-        </Button>
-      </form>
-      <span>
-        {isLoggedIn ? "Need a new account?" : "Already have an account?"}
-        <ToggleButton variant="contained" onClick={handleLogin}>
-          {" "}
-          {isLoggedIn ? "Create" : "Login"}{" "}
-        </ToggleButton>
-      </span>
+          )}
+          <Button 
+            variant="contained" 
+            color="neutral" 
+            type="submit"
+            sx={{ mt: 2}}
+          >
+              {isLoggedIn ? "Login" : "Create"}{" "}
+            </Button>
+        </Box>
+        <FormControlLabel
+          control={<Switch checked={isLoggedIn} onChange={handleLogin} />}
+          label={isLoggedIn ? "Need a new account?" : "Already have an account?"}
+        />
+      </Box>
       {error ? <Error /> : <></>}
-    </div>
+    </Container>
   );
 };
 
