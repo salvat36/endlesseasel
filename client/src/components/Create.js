@@ -1,16 +1,19 @@
-import React from 'react'
-import PromptForm from './PromptForm'
+import React from "react";
+import PromptForm from "./PromptForm";
+import { Box, Container, Typography } from "@mui/material";
 
-const Create = ( { updateArtworks } ) => {
-  const handleAddPrompt = ( newPromptArtwork ) => {
-    updateArtworks((artworks) => [newPromptArtwork, ...artworks])
-  }
+const Create = ({ updateArtworks }) => {
+  const handleAddPrompt = (newPromptArtwork) => {
+    updateArtworks((artworks) => [newPromptArtwork, ...artworks]);
+  };
   return (
-    <>
-    <div>Create</div>
-    <PromptForm handleAddPrompt={handleAddPrompt}/>
-    </>
-  )
-}
+    <Container>
+      <Box>
+        <Typography variant="h1"> Create </Typography>
+        <PromptForm handleAddPrompt={handleAddPrompt} />
+      </Box>
+    </Container>
+  );
+};
 
-export default Create
+export default Create;
