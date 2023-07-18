@@ -61,7 +61,7 @@ const UserArtwork = () => {
              <CardContent>
                   <Typography variant="h6">{artwork.title}</Typography>
                 </CardContent>
-                <Button variant="contained" color="secondary" onClick={() => handleDeleteUserArtwork(artwork.id)}>
+                <Button variant="contained" color="error" onClick={() => handleDeleteUserArtwork(artwork.id)}>
                   Remove
                 </Button>
               </Card>
@@ -95,7 +95,7 @@ const UserArtwork = () => {
         >
           Delete Profile
         </Button>
-        <Button variant="contained" color="primary" onClick={toggleForm}>
+        <Button variant="contained" color="neutral" onClick={toggleForm}>
           Edit Profile
         </Button>
         {showForm ? <UpdateUserForm toggleForm={toggleForm} /> : null}
