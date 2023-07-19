@@ -61,7 +61,7 @@ const UserArtwork = () => {
              <CardContent>
                   <Typography variant="h6">{artwork.title}</Typography>
                 </CardContent>
-                <Button variant="contained" color="secondary" onClick={() => handleDeleteUserArtwork(artwork.id)}>
+                <Button variant="contained" color="error" onClick={() => handleDeleteUserArtwork(artwork.id)}>
                   Remove
                 </Button>
               </Card>
@@ -72,7 +72,7 @@ const UserArtwork = () => {
   return (
     <Grid container direction="column" alignItems="center" spacing={2}>
       <Grid item>
-        <Typography variant="h4">Your Profile</Typography>
+        <Typography variant="h1">Portfolio</Typography>
       </Grid>
       <Grid item>
         <Card>
@@ -90,12 +90,12 @@ const UserArtwork = () => {
       <Grid item>
         <Button
           variant="contained"
-          color="secondary"
+          color="error"
           onClick={handleDeleteUser}
         >
           Delete Profile
         </Button>
-        <Button variant="contained" color="primary" onClick={toggleForm}>
+        <Button variant="contained" color="neutral" onClick={toggleForm}>
           Edit Profile
         </Button>
         {showForm ? <UpdateUserForm toggleForm={toggleForm} /> : null}

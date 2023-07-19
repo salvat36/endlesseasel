@@ -237,6 +237,7 @@ class UserArtworkById(Resource):
             return make_response(user_artwork.to_dict(), 200)
         return make_response({"error": "UserArtwork not found"}, 404)
 
+
     def delete(self, id):
         if "user_id" not in session:
             return make_response({"error": "Unauthorized"}, 401)
@@ -260,6 +261,8 @@ class Reviews(Resource):
         return make_response(reviews, 200)
 
     def post(self):
+        if "user_id" not in session:
+            return make_response({"error": "Unauthorized"}, 401)
         data = request.get_json()
         try:
             new_review = Review(
@@ -301,6 +304,8 @@ class ReviewById(Resource):
         return make_response({"error": "Review not found"}, 404)
 
     def delete(self, id):
+        if "user_id" not in session:
+            return make_response({"error": "Unauthorized"}, 401)
         review = db.session.get(Review, id)
         if review:
             db.session.delete(review)
