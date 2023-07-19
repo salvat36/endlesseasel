@@ -58,12 +58,12 @@ const ArtDetail = () => {
   };
 
   return (
-    <Box sx={{ p: 2}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h1"> Art Detail </Typography>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant="h2">Title: {title}</Typography>
-          <Typography variant="h2">Style: {genre}</Typography>
-          <Typography variant="h2">Price: ${price}</Typography>
+          <Typography variant="h4">Title: {title}</Typography>
+          <Typography variant="h4">Style: {genre}</Typography>
+          <Typography variant="h4">Price: ${price}</Typography>
         </Box>
           <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
           <img src={image} alt={title} style={{ maxWidth: '100%', maxHeight: '400px' }} />

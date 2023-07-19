@@ -39,7 +39,7 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
         if (res.ok) {
           res.json().then((res) => {
             handleAddReview(res);
-            resetForm({ valies: "" });
+            resetForm({ values: "" });
           });
         } else {
           res.json().then((error) => setError([error.error]));
