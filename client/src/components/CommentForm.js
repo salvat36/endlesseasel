@@ -54,7 +54,7 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
           {" "}
           your critique for the artist!
         </Typography>
-        <Box width="100%">
+        <Box width="50%" >
           <TextField
             label="Rating"
             variant="outlined"

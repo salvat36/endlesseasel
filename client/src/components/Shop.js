@@ -11,7 +11,7 @@ const galleryStyle = {
 };
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant='h1'>Art Gallery</Typography>
       <Box sx={galleryStyle}>
       {artworks.map((artwork) => (

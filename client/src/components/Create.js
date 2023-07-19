@@ -7,7 +7,7 @@ const Create = ({ updateArtworks }) => {
     updateArtworks((artworks) => [newPromptArtwork, ...artworks]);
   };
   return (
-      <Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="h1"> Create </Typography>
         <PromptForm handleAddPrompt={handleAddPrompt} />
       </Box>

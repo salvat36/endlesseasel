@@ -72,7 +72,7 @@ const UserArtwork = () => {
   return (
     <Grid container direction="column" alignItems="center" spacing={2}>
       <Grid item>
-        <Typography variant="h4">Your Profile</Typography>
+        <Typography variant="h1">Portfolio</Typography>
       </Grid>
       <Grid item>
         <Card>
