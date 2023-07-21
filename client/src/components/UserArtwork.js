@@ -24,7 +24,6 @@ const UserArtwork = () => {
     fetch(`/user-artworks/${id}`, { method: "DELETE" }).then((res) => {
       if (res.ok) {
         updateUserArtwork(id);
-        alert("Successfully Deleted User-Book");
       }
     });
   };
