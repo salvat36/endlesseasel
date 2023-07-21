@@ -125,7 +125,7 @@ Contributions are more than welcome. Please follow the below
 
 MIT License
 
-Copyright (c) 2023 Historia Montague, Ren Blake, Ryan Salvato
+Copyright (c) 2023 Ryan Salvato
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
