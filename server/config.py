@@ -44,3 +44,6 @@ CORS(app)
 
 # Instantiate Bcrypt
 bcrypt = Bcrypt(app)
+
+
+import openai

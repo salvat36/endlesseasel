@@ -14,14 +14,6 @@ from config import app, db, api, openai
 from models import User, Review, Artwork, UserArtwork
 
 
-# 1.set prompt to a variable with request.get_json() to grab Data
-# 2.create formik form on front end to create request to pass into variable here
-# 3.collect response from the api
-# 4.add response to the database
-# 5.display database data to user as image or do I display response first??
-# 6. limit rate requests or et?
-
-
 # OpenAI Request
 @app.route("/create", methods=['POST'])
 def createImageFromPrompt():
