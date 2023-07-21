@@ -1,50 +1,46 @@
-# Phase 4 Full-Stack Application Project Template
-
-## Learning Goals
-
-- Discuss the basic directory structure of a full-stack Flask/React application.
-- Carry out the first steps in creating your Phase 4 project.
-
-***
+# EndlessEasel
+- Created by Ryan Salvato
 
 ## Introduction
 
-Fork and clone this lesson for a template for your full-stack application. Take
-a look at the directory structure before we begin:
-
-```console
-$ tree -L 2
-$ # the -L argument limits the depth at which we look into the directory structure
-.
-├── CONTRIBUTING.md
-├── LICENSE.md
-├── README.md
-├── client
-│   ├── README.md
-│   ├── node_modules
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── public
-│   └── src
-└── server
-    ├── app.py
-    ├── config.py
-    ├── migrations
-    ├── models.py
-    └── seed.py
-```
-
-> **Note: You may already know some or all of the material covered in this
-> lesson. We hope that having it all in one place will help you in designing
-> and developing your project, regardless of where you're starting off.**
+- Welcome to EndlessEasel!  This app serves as a playground for Artists/Creators.  You're able to explore a collection of vast AI generated Artworks by other users.  Save your favorite works of art for later use and even generate your own artwork to share with the EndlessEasel community!
 
 ***
+## Features
 
-## Where Do I Start?
+User Accounts: Users can easily sign up, log in, and manage their profiles. They have the flexibility to edit or delete their profile information as needed.
 
-Just as with your Phase 3 Project, this will likely be one of the biggest
-projects you've undertaken so far. Your first task should be creating a Git
-repository to keep track of your work and roll back any undesired changes.
+AI Art Gallery: Explore a diverse and extensive collection of AI-generated artworks contributed by other users.
+
+Engagement and Interaction: Users can engage with the AI art community by leaving comments on artworks they appreciate or saving their favorite pieces to revisit later.
+
+Creative Expression: Encouraging creativity, users can craft their own AI-generated image prompts. They have the freedom to bring to life whatever their heart and mind can envision using the power of AI.
+## File Structure
+
+```console
+├── CONTRIBUTING.md    # Guidelines for contributors
+├── LICENSE.md         # Project's license information
+├── Pipfile            # Dependency specifications using Pipenv
+├── Pipfile.lock       # Locked versions of dependencies
+├── README.md          # This file - the project's README
+├── client             # Frontend directory
+│   ├── README.md      # Client-specific README
+│   ├── build          # Build output for the client app
+│   ├── node_modules   # Node.js dependencies
+│   ├── package-lock.json   # Lock file for Node.js dependencies
+│   ├── package.json   # Node.js package configuration
+│   ├── public         # Static assets for the client app
+│   └── src            # Source code for the client app
+├── requirements.txt   # Python dependencies for the server
+└── server             # Backend directory
+    ├── app.py         # Main application file
+    ├── config.py      # Configuration settings for the server
+    ├── migrations     # Database migrations folder
+    ├── models.py      # Data models for the server
+    └── seed.py        # Data seeding script
+
+```
+
 
 ### Removing Existing Git Configuration
 
