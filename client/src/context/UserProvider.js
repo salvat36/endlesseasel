@@ -53,6 +53,7 @@ const UserProvider = ({ children }) => {
       if (res.ok) {
         res.json().then((res) => {
           updateUser(res);
+          return true;
         });
       } else {
         if (url === "/login") {

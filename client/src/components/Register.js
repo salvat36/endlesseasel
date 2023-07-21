@@ -40,9 +40,11 @@ const Register = () => {
     },
     validationSchema: !isLoggedIn ? registerSchema : signInSchema,
     onSubmit: (values, { resetForm }) => {
-      handleRegister(values);
       resetForm();
+      const ok = handleRegister(values);
+      if(ok) {
       history.push("/");
+      }
     },
   });
 
