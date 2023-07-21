@@ -59,7 +59,7 @@ const Register = () => {
         <Typography variant="4" gutterBottom>
           {isLoggedIn ? "Already a User?" : "Not a User?"}
         </Typography>
-        <Box component="form" onSubmit={formik.handleSubmit} width="100%">
+        <Box component="form" onSubmit={formik.handleSubmit} width="25%">
           <TextField
             label="Username"
             variant="outlined"

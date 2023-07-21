@@ -48,13 +48,13 @@ const CommentForm = ({ handleAddReview, artwork_id }) => {
     },
   });
   return (
-    <Container>
+    <Container >
       <Box mt={5} display="flex" flexDirection="column" alignItems="center">
         <Typography variant="h4" gutterBottom>
           {" "}
           your critique for the artist!
         </Typography>
-        <Box width="50%" >
+        <Box alignItems="center" width="50%" >
           <TextField
             label="Rating"
             variant="outlined"

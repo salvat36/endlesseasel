@@ -17,10 +17,10 @@ const Comment = ( {review }) => {
   }));
 
   return (
-    <Box sx={{ width: '50%' }}>
+    <Box sx={{ width: '80%' }}>
     <Stack spacing={2}>
       <Box>
-      <RatingItem>Customer Rating: {review.rating}/10</RatingItem>
+      <RatingItem backgroundColor=''>Customer Rating: {review.rating}/10</RatingItem>
       <Item>Customer Review: {review.description}</Item>
       </Box>
     </Stack>

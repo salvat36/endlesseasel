@@ -81,7 +81,7 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
   });
 
   return (
-    <Container>
+    <Container  display="flex">
       <Box
         mt={5}
         component="form"
@@ -89,6 +89,8 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
         display="flex"
         flexDirection="column"
         alignItems="center"
+        justifyContent="center"
+        width='100%'
       >
         <Typography variant="h4" gutterBottom>
           Generate an Image!
@@ -145,12 +147,14 @@ const PromptForm = ({ handleAddPrompt, user_id }) => {
             }
             helperText={formik.touched.prompt && formik.errors.prompt}
           />
-          <Button type="submit" variant="contained" color="neutral">
-            Create Your Masterpiece!
-          </Button>
-          <Box>
+          <Box display='flex' justifyContent='center'>
+            <Button type="submit" variant="contained" color="neutral">
+          Create Your Masterpiece!
+            </Button>
+          </Box>
+          <Box display='flex' alignContent='center' paddingTop={5}>
             {imageURL && (
-              <Box>
+              <Box display='flex' alignContent='center' paddingRight={5}>
                 <Typography variant="h2">and voilà!</Typography>
                 <img
                   src={imageURL}
