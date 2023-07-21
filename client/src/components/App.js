@@ -9,6 +9,7 @@ import ArtDetail from "./ArtDetail";
 import Create from "./Create";
 import UserArtwork from "./UserArtwork";
 import { ErrorContext } from "../context/ErrorProvider";
+import './app.css'
 
 function App() {
   const [artworks, setArtworks] = useState([]);

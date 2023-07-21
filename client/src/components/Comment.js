@@ -20,7 +20,7 @@ const Comment = ( {review }) => {
     <Box sx={{ width: '80%' }}>
     <Stack spacing={2}>
       <Box>
-      <RatingItem backgroundColor=''>Customer Rating: {review.rating}/10</RatingItem>
+      <RatingItem>Customer Rating: {review.rating}/10</RatingItem>
       <Item>Customer Review: {review.description}</Item>
       </Box>
     </Stack>
